@@ -1,0 +1,67 @@
+{
+  "name": "sdp",
+  "version": "0.0.1",
+  "description": "Systeme De Pointage",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "clean": "rimraf ./dist",
+    "dev": "webpack-dev-server --content-base ./dist --watch",
+    "lint": "eslint ./src",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/trapcodien/sdp.git"
+  },
+  "keywords": [
+    "pointing",
+    "system"
+  ],
+  "author": "Guillaume ARM",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/trapcodien/sdp#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.11.0",
+    "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-react": "^7.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.2.1",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
+  },
+  "jest": {
+    "globals": {
+      "process.env.NODE_ENV": "test",
+      "__NODE_ENV__": "test"
+    },
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "moduleDirectories": [
+      "src",
+      "node_modules"
+    ]
+  }
+}
