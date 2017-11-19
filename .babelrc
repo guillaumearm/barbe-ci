@@ -1,6 +1,14 @@
 {
   "presets": [
- 	"es2017",
-	"react"
+   	"es2017",
+  	"react"
+  ],
+  "plugins": [
+    [
+      "react-css-modules",
+      {
+        "context": "./src"
+      }
+    ]
   ]
 }
