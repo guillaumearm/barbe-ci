@@ -4,17 +4,32 @@
   "description": "Systeme De Pointage",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "clean": "rimraf ./dist",
     "dev": "webpack-dev-server --content-base ./dist --watch",
     "lint": "eslint ./src",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch --coverage",
+    "test:watch": "jest --watch",
     "test:all": "npm run build && npm run lint && npm run test",
     "precommit": "lint-staged",
     "prepush": "npm run test:all",
-    "preversion": "npm run test:all"
+    "preversion": "npm run test:all",
+    "help": "node node_modules/npm-scripts-help"
+  },
+  "scriptshelp": {
+    "build": "build the project for production",
+    "clean": "clean dist/ folder",
+    "dev": "launch dev server",
+    "lint": "lint all files in src/ folder",
+    "test": "launch jest",
+    "test:coverage": "launch jest in coverage mode",
+    "test:watch": "launch jest in watch mode",
+    "test:all": "build, lint, then test",
+    "precommit": "git precommit hook",
+    "prepush": "git precommit hook",
+    "preversion": "git precommit hook",
+    "help": "show this help"
   },
   "lint-staged": {
     "*.js": [
@@ -49,6 +64,7 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lint-staged": "^5.0.0",
+    "npm-scripts-help": "^0.7.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
     "style-loader": "^0.19.0",
