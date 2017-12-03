@@ -20,6 +20,9 @@
     "browser": true,
     "jest": true
   },
+  "globals": {
+    "process": true,
+  },
   "settings": {
     "import/resolver": {
       "webpack": {

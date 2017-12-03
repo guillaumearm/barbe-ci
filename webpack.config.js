@@ -1,13 +1,23 @@
 /* eslint-env node */
+const { reject, isNil } = require('ramda');
+const webpack = require('webpack');
 const path = require('path');
 const context = path.resolve(__dirname, 'src/client');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const htmlPluginConfig = new HtmlWebpackPlugin({
   template: './boot/index.html',
   filename: 'index.html',
   inject: 'body'
 });
+
+const definePluginConfig = new webpack.DefinePlugin({
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+})
+
+const uglifyPluginConfig = new webpack.optimize.UglifyJsPlugin();
 
 module.exports = {
     context,
@@ -32,5 +42,9 @@ module.exports = {
         },
       ]
     },
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: reject(isNil)([
+      htmlPluginConfig,
+      definePluginConfig,
+      isProduction ? uglifyPluginConfig : undefined,
+    ])
  };
