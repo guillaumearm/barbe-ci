@@ -6,6 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "clean": "rimraf ./dist",
+    "start": "NODE_ENV=production node -r babel-register ./src/server/index.js",
     "dev": "NODE_ENV=development webpack-dev-server --content-base ./dist --watch",
     "lint": "eslint ./src",
     "test": "NODE_ENV=test jest",
@@ -20,6 +21,7 @@
   "scriptshelp": {
     "build": "build the project for production",
     "clean": "clean dist/ folder",
+    "start": "Launch production server",
     "dev": "launch dev server",
     "lint": "lint all files in src/ folder",
     "test": "launch jest",
@@ -72,9 +74,13 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "koa": "^2.4.1",
+    "koa-static": "^4.0.2",
     "ramda": "^0.25.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "jest": {
     "globals": {
