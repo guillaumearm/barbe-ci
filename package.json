@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "clean": "rimraf ./dist",
-    "start": "NODE_ENV=production node -r babel-register ./src/server/index.js",
+    "start": "NODE_ENV=production node ./src/server/index.js",
     "dev": "NODE_ENV=development webpack-dev-server --content-base ./dist --watch",
     "lint": "eslint ./src",
     "test": "NODE_ENV=test jest",
@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "koa": "^2.4.1",
-    "koa-static": "^4.0.2",
+    "koa-middlewares": "^6.0.0",
     "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
