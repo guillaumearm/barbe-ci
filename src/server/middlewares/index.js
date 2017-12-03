@@ -1,17 +1,12 @@
 const middlewares = require('koa-middlewares');
 const router = require('./router');
+const assets = require('./assets');
 
-module.exports = ({
-  DIST_FOLDER,
-  jsonLimit = '1mb',
-}) => [
+module.exports = (serverOpts) => [
+  middlewares.logger(),
   middlewares.bodyParser({
-    limit: jsonLimit,
+    limit: '10mb',
   }),
   router.routes(),
-  middlewares.logger(),
-  middlewares.staticCache(DIST_FOLDER, {
-    buffer: true,
-    maxAge: 60 * 60 * 24 * 7,
-  })
+  ...assets(serverOpts),
 ]

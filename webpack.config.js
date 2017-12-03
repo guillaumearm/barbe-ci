@@ -19,11 +19,14 @@ const definePluginConfig = new webpack.DefinePlugin({
 
 const uglifyPluginConfig = new webpack.optimize.UglifyJsPlugin();
 
+const distFolder = path.join(__dirname, './dist');
+
 module.exports = {
     context,
     entry: './boot/index.js',
     output: {
-       path: path.join(__dirname, './dist'),
+       path: distFolder,
+       publicPath: 'http://localhost:8080/',
        filename: 'app.bundle.js',
     },
     resolve: {
