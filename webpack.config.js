@@ -1,6 +1,6 @@
 /* eslint-env node */
 const path = require('path');
-const context = path.resolve(__dirname, 'src');
+const context = path.resolve(__dirname, 'src/client');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -17,7 +17,7 @@ module.exports = {
        filename: 'app.bundle.js',
     },
     resolve: {
-      modules: ['src', 'node_modules']
+      modules: ['src/client', 'node_modules']
     },
     module: {
       loaders: [
