@@ -1,7 +1,7 @@
 Source code architecture
 =============
 
-### src/
+### src/client/
 - boot/
   - ./index.js
   - ./index.html
@@ -21,3 +21,12 @@ Source code architecture
   - fp/
   - hoc/
   - store/
+
+### src/server
+- ./index.js
+- api/
+  - ./index.js
+- middlewares/
+  - assets/
+  - ./index.js
+  - ./router.js
