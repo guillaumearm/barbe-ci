@@ -27,8 +27,8 @@
     "test:watch": "launch jest in watch mode",
     "test:all": "build, lint, then test",
     "precommit": "git precommit hook",
-    "prepush": "git precommit hook",
-    "preversion": "git precommit hook",
+    "prepush": "git prepush hook",
+    "preversion": "git preversion hook",
     "help": "show this help"
   },
   "lint-staged": {
