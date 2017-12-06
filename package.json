@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack",
+    "build:dev": "NODE_ENV=development webpack",
     "clean": "rimraf ./dist",
     "start": "NODE_ENV=production node ./src/server",
     "dev": "NODE_ENV=development nodemon -w ./src/server ./src/server/index.js",
@@ -12,7 +13,7 @@
     "test": "NODE_ENV=test jest",
     "test:coverage": "NODE_ENV=test jest --coverage",
     "test:watch": "NODE_ENV=test jest --watch",
-    "test:all": "npm run clean && npm run build && npm run lint && npm run test",
+    "test:all": "npm run clean && npm run build && npm run build:dev && npm run lint && npm run test",
     "precommit": "lint-staged",
     "prepush": "npm run test:all",
     "preversion": "npm run test:all",
@@ -20,6 +21,7 @@
   },
   "scriptshelp": {
     "build": "build the project for production",
+    "build:dev": "build the project for development",
     "clean": "clean dist/ folder",
     "start": "Launch production server",
     "dev": "launch dev server",
@@ -27,7 +29,7 @@
     "test": "launch jest",
     "test:coverage": "launch jest in coverage mode",
     "test:watch": "launch jest in watch mode",
-    "test:all": "build, lint, then test",
+    "test:all": "clean, build prod, build dev, lint, then test",
     "precommit": "git precommit hook",
     "prepush": "git prepush hook",
     "preversion": "git preversion hook",
