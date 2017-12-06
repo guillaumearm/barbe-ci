@@ -6,6 +6,7 @@ const context = path.resolve(__dirname, 'src/client');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = !isProduction;
 
 const htmlPluginConfig = new HtmlWebpackPlugin({
   template: './boot/index.html',
@@ -17,16 +18,25 @@ const definePluginConfig = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 })
 
+
 const uglifyPluginConfig = new webpack.optimize.UglifyJsPlugin();
+
+const hotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
+
+const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 
 const distFolder = path.join(__dirname, './dist');
 
 module.exports = {
+    ...(isDevelopment ? { devtool: 'source-map' } : {}),
     context,
-    entry: './boot/index.js',
+    entry: reject(isNil)([
+      isDevelopment ? 'webpack-hot-middleware/client' : undefined,
+      './boot/index.js',
+    ]),
     output: {
        path: distFolder,
-       publicPath: 'http://localhost:8080/',
+       publicPath: '/',
        filename: 'app.bundle.js',
     },
     resolve: {
@@ -48,6 +58,10 @@ module.exports = {
     plugins: reject(isNil)([
       htmlPluginConfig,
       definePluginConfig,
+      new webpack.optimize.ModuleConcatenationPlugin(),
+      isDevelopment ? namedModulesPluginConfig : undefined,
+      isDevelopment ? hotModuleReplacementPluginConfig : undefined,
+      isDevelopment ? new webpack.NoEmitOnErrorsPlugin() : undefined,
       isProduction ? uglifyPluginConfig : undefined,
     ])
  };

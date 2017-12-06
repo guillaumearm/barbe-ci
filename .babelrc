@@ -1,14 +1,13 @@
 {
   "presets": [
-    "env",
+    ["latest", {
+        "es2015": {
+          "modules": false
+        }
+    }],
   	"react"
   ],
   "plugins": [
-    [
-      "react-css-modules",
-      {
-        "context": "./src"
-      }
-    ]
+    ["react-css-modules", { "context": "./src" }]
   ]
 }
