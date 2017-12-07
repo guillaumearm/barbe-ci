@@ -5,9 +5,12 @@ const Koa = require('koa');
 
 const getMiddlewares = require('./middlewares');
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 const serverOpts = {
   PORT: process.env.PORT || 8080,
   DIST_FOLDER: path.resolve(__dirname, '../../dist'),
+  USE_LOGGER: Boolean(process.env.USE_LOGGER) || isDevelopment
 }
 
 const app = new Koa();
