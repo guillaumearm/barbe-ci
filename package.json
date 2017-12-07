@@ -9,7 +9,7 @@
     "clean": "rimraf ./dist",
     "start": "NODE_ENV=production node ./src/server",
     "dev": "NODE_ENV=development nodemon -w ./src/server ./src/server/index.js",
-    "lint": "eslint ./src",
+    "lint": "eslint .",
     "test": "NODE_ENV=test jest",
     "test:coverage": "NODE_ENV=test jest --coverage",
     "test:watch": "NODE_ENV=test jest --watch",
@@ -63,6 +63,7 @@
     "eslint": "^4.12.1",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-react": "^7.5.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
@@ -88,10 +89,12 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2"
   },
+  "engines": {
+    "node": ">=9.0.0"
+  },
   "jest": {
     "globals": {
-      "process.env.NODE_ENV": "test",
-      "__NODE_ENV__": "test"
+      "process.env.NODE_ENV": "test"
     },
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
@@ -103,7 +106,7 @@
       "<rootDir>/dist/"
     ],
     "moduleDirectories": [
-      "src",
+      "src/client",
       "node_modules"
     ]
   }
