@@ -28,7 +28,7 @@ const namedModulesPluginConfig = new webpack.NamedModulesPlugin();
 const distFolder = path.join(__dirname, './dist');
 
 module.exports = {
-    ...(isDevelopment ? { devtool: 'source-map' } : {}),
+    devtool: isDevelopment ? 'source-map' : '',
     context,
     entry: reject(isNil)([
       isDevelopment ? 'webpack-hot-middleware/client' : undefined,
