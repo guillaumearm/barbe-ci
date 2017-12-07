@@ -1,7 +1,7 @@
-const middlewares = require('koa-middlewares');
+const createRouter = require('koa-router');
 const api = require('../api');
 
-const router = middlewares.router();
+const router = createRouter();
 router.post('/api', api);
 
 module.exports = router;

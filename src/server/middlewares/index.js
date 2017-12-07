@@ -1,10 +1,12 @@
-const middlewares = require('koa-middlewares');
+const logger = require('koa-logger');
+const bodyParser = require('koa-bodyparser');
+
 const router = require('./router');
 const assets = require('./assets');
 
 module.exports = (serverOpts) => [
-  middlewares.logger(),
-  middlewares.bodyParser({
+  logger(),
+  bodyParser({
     limit: '10mb',
   }),
   router.routes(),
