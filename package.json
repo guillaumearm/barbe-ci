@@ -1,6 +1,6 @@
 {
   "name": "sdp",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Systeme De Pointage",
   "main": "index.js",
   "bin": [
