@@ -3,6 +3,9 @@
   "version": "0.4.0",
   "description": "Systeme De Pointage",
   "main": "index.js",
+  "bin": [
+    "./src/server/index.js"
+  ],
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "build:dev": "NODE_ENV=development webpack",
