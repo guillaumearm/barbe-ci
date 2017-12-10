@@ -1,32 +1,40 @@
-Source code architecture
+SDP Pointing System
 =============
 
-### src/client/
-- boot/
-  - ./index.js
-  - ./index.html
-- App/
-  - domain components
-  - domain updaters
-  - domain sagas
-  - domain actions
-- Components/
-  - basic components (links, buttons, ...)
-  - others common components (calendar, ...)
-- store/
-  - internal global store
-  - expose all global selectors
-  - assemble all domain reducers and sagas
-- utils/
-  - fp/
-  - hoc/
-  - store/
+### Download
+```bash
+$ git clone https://trapcodien@bitbucket.org/trapcodien/sdp.git
+$ cd sdp
+```
 
-### src/server
-- ./index.js
-- api/
-  - ./index.js
-- middlewares/
-  - assets/
-  - ./index.js
-  - ./router.js
+### Install
+```bash
+$ npm install
+```
+
+### Start dev server
+```bash
+$ npm run dev
+```
+Then, take your favorite browser and go to http://localhost:8080
+
+
+### Start tests
+##### unit tests :
+```bash
+$ npm run test
+```
+##### lint tests :
+```bash
+$ npm run lint
+```
+
+##### all tests :
+```bash
+$ npm run test:all
+```
+
+### More commands
+```bash
+$ npm run help
+```
