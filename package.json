@@ -33,6 +33,7 @@
     "test": "launch jest",
     "test:coverage": "launch jest in coverage mode",
     "test:watch": "launch jest in watch mode",
+    "test:integration": "launch end-to-end integration tests",
     "test:all": "clean, build dev, build prod, unit tests, inegration tests, then lint tests",
     "precommit": "git precommit hook",
     "prepush": "git prepush hook",
