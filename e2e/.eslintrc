@@ -3,5 +3,17 @@
     "browser": true,
     "node": true,
     "jest": true,
+  },
+  "plugins": [
+    "node"
+  ],
+  "extends": [
+    "plugin:node/recommended"
+  ],
+  "rules": {
+    "node/exports-style": ["error", "module.exports"],
+    "node/no-unpublished-require": ["error", {
+      "allowModules": ["webpack", "webpack-dev-middleware", "webpack-hot-middleware"],
+    }]
   }
 }
