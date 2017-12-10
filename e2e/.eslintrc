@@ -18,7 +18,12 @@
   "rules": {
     "node/exports-style": ["error", "module.exports"],
     "node/no-unpublished-require": ["error", {
-      "allowModules": ["webpack", "webpack-dev-middleware", "webpack-hot-middleware"],
+      "allowModules": [
+        "webpack",
+        "webpack-dev-middleware",
+        "webpack-hot-middleware",
+        "puppeteer"
+      ],
     }]
   }
 }
