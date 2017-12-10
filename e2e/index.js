@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+const execFile = promisify(require('child_process').execFile);
 const { pipe, equals } = require('ramda');
 const path = require('path')
 const { readdirSync } = require('fs');
@@ -8,9 +10,22 @@ const integrationTests = readdirSync(path.join(__dirname, TEST_FOLDER))
   .filter(pipe(path.extname, equals('.js')))
   .map(testFile => `./${TEST_FOLDER}/${testFile}`)
   .map(require)
+;
+
+const webpackArguments = [
+  '--output-path', path.join(__dirname, './dist'),
+];
+
+const webpackOptions = {
+  env: { ...process.env, NODE_ENV: 'production' },
+};
 
 describe('e2e testing', () => {
-  test('build client (production mode)');
+  test('build client (production mode)', async () => {
+    const child = await execFile('webpack', webpackArguments, webpackOptions);
+    expect(child.error).not.toBeInstanceOf(Error);
+  });
+
   test('fork server process (production mode)');
 
   integrationTests.forEach(([...args]) => {

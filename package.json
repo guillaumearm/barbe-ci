@@ -9,7 +9,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "build:dev": "NODE_ENV=development webpack",
-    "clean": "rimraf ./dist ./coverage",
+    "clean": "rimraf ./dist ./coverage ./e2e/dist",
     "start": "NODE_ENV=production node ./src/server -p 8000",
     "dev": "NODE_ENV=development nodemon -w ./src/server ./src/server/index.js -p 8080 --verbose",
     "lint": "eslint .",
