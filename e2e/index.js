@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { promisify } = require('util');
 const execFile = promisify(require('child_process').execFile);
 const { pipe, equals } = require('ramda');
@@ -22,8 +23,12 @@ const webpackOptions = {
 
 describe('e2e testing', () => {
   test('build client (production mode)', async () => {
-    const child = await execFile('webpack', webpackArguments, webpackOptions);
-    expect(child.error).not.toBeInstanceOf(Error);
+    try {
+      await execFile('webpack', webpackArguments, webpackOptions);
+    } catch (e) {
+      console.warn(e.stdout);
+      throw new Error('Error: webpack build failed')
+    }
   });
 
   test('fork server process (production mode)');
