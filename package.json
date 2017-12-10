@@ -13,9 +13,9 @@
     "start": "NODE_ENV=production node ./src/server -p 8000",
     "dev": "NODE_ENV=development nodemon -w ./src/server ./src/server/index.js -p 8080 --verbose",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest",
-    "test:coverage": "NODE_ENV=test jest --coverage",
-    "test:watch": "NODE_ENV=test jest --watch",
+    "test": "NODE_ENV=test jest --config src/client/jest.config.js",
+    "test:coverage": "NODE_ENV=test jest --config src/client/jest.config.js --coverage",
+    "test:watch": "NODE_ENV=test jest --config src/client/jest.config.js --watch",
     "test:all": "npm run clean && npm run build:dev && npm run build && npm run lint && npm run test",
     "precommit": "lint-staged",
     "prepush": "npm run test:all",
@@ -99,23 +99,5 @@
   },
   "engines": {
     "node": ">=9.0.0"
-  },
-  "jest": {
-    "globals": {
-      "process.env.NODE_ENV": "test"
-    },
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/dist/"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/dist/"
-    ],
-    "moduleDirectories": [
-      "src/client",
-      "node_modules"
-    ]
   }
 }

@@ -9,5 +9,12 @@
   ],
   "plugins": [
     ["react-css-modules", { "context": "./src" }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["latest", {}]
+      ]
+    }
+  }
 }
