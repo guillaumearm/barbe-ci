@@ -27,12 +27,14 @@ const webpackArguments = [
 const serverProcessArguments = [
   path.join(__dirname, '../src/server/index.js'),
   '-p', testOptions.SERVER_PORT,
+  '-d', path.join(__dirname, testOptions.DIST_FOLDER),
 ]
 
 describe('e2e testing', () => {
   let serverProcess;
-  test('build client (production mode)', async () => {
+  test('rebuild client (production mode)', async () => {
     try {
+      await execFile('npm', ['run', 'clean:e2e']);
       await execFile('webpack', webpackArguments, { env });
     } catch (e) {
       console.warn(e.stdout);
