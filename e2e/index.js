@@ -12,7 +12,7 @@ const testOptions = {
   SERVER_PORT: 8081,
 };
 
-const integrationTests = readdirSync(path.join(__dirname, testOptions.TEST_FOLDER))
+const functionalTests = readdirSync(path.join(__dirname, testOptions.TEST_FOLDER))
   .filter(pipe(path.extname, equals('.js')))
   .map(testFile => `./${testOptions.TEST_FOLDER}/${testFile}`)
   .map(require)
@@ -50,12 +50,14 @@ describe('e2e testing', () => {
     })
   });
 
-  integrationTests.forEach((getTest) => {
-    test(...getTest(testOptions))
-  })
+  describe('functional tests', () => {
+    functionalTests.forEach((getTest) => {
+      test(...getTest(testOptions))
+    })
 
-  test('exit server process', () => {
-    serverProcess.stdin.pause()
-    serverProcess.kill();
-  })
+    afterAll(() => {
+      serverProcess.stdin.pause()
+      serverProcess.kill();
+    })
+  });
 })
