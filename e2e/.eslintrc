@@ -2,7 +2,6 @@
   "env": {
     "browser": true,
     "node": true,
-    "jest": true,
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,10 +18,9 @@
     "node/exports-style": ["error", "module.exports"],
     "node/no-unpublished-require": ["error", {
       "allowModules": [
-        "webpack",
-        "webpack-dev-middleware",
-        "webpack-hot-middleware",
-        "puppeteer"
+        "async-describe",
+        "puppeteer",
+        "expect.js"
       ],
     }]
   }

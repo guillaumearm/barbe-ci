@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+const { describe, test } = require('async-describe');
+const puppeteer = require('puppeteer');
 const { spawn } = require('child_process');
 const { promisify } = require('util');
 const execFile = promisify(require('child_process').execFile);
@@ -30,34 +31,43 @@ const serverProcessArguments = [
   '-d', path.join(__dirname, testOptions.DIST_FOLDER),
 ]
 
-describe('e2e testing', () => {
+describe('e2e testing', async () => {
+  let browser;
   let serverProcess;
-  test('rebuild client (production mode)', async () => {
-    try {
-      await execFile('npm', ['run', 'clean:e2e']);
-      await execFile('webpack', webpackArguments, { env });
-    } catch (e) {
-      console.warn(e.stdout);
-      throw new Error('Error: webpack build failed')
-    }
+  await describe('build client (production mode)', async () => {
+    await execFile('npm', ['run', 'clean:e2e']);
+    await execFile('webpack', webpackArguments, { env });
   });
 
-  test('spawn server process (production mode)', (done) => {
+  await describe('spawn server process (production mode)', async () => {
     serverProcess = spawn('node', serverProcessArguments, { env })
-    serverProcess.stdout.on('data', (data) => {
-      expect(data.toString()).toMatch(new RegExp(`^Listening on ${testOptions.SERVER_PORT}`))
-      done();
-    })
+    await new Promise(resolve => {
+      serverProcess.stdout.on('data', (data) => {
+        if (new RegExp(`^Listening on ${testOptions.SERVER_PORT}`).test(data.toString())) {
+          resolve(data.toString())
+        }
+      })
+    });
   });
 
-  describe('functional tests', () => {
-    functionalTests.forEach((getTest) => {
-      test(...getTest(testOptions))
-    })
+  await describe('launch chrome headless client', async () => {
+    browser = await puppeteer.launch();
+  })
 
-    afterAll(() => {
-      serverProcess.stdin.pause()
-      serverProcess.kill();
-    })
+  await describe('functional tests', async () => {
+    await Promise.all(functionalTests.map(async (getTest) => {
+      const page = await browser.newPage();
+      await test(...getTest({ ...testOptions, page }))
+      await page.close();
+    }))
   });
+
+  await describe('close server', async () => {
+    serverProcess.stdin.pause()
+    serverProcess.kill();
+  })
+
+  await describe('close browser', async () => {
+    await browser.close();
+  })
 })

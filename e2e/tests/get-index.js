@@ -1,15 +1,12 @@
-const puppeteer = require('puppeteer');
+const expect = require('expect.js');
 
-module.exports = ({ SERVER_PORT }) => ['get index.html', async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+module.exports = ({ SERVER_PORT, page }) => ['get index.html', async () => {
   await page.goto(`http://localhost:${SERVER_PORT}`);
 
   const bodyHandle = await page.$('body div#root-container');
   const html = await page.evaluate(body => body.innerHTML, bodyHandle);
   await bodyHandle.dispose();
 
-  expect(html).toBeTruthy();
+  expect(html).to.be.ok();
 
-  await browser.close();
-}, 30 * 1000]
+}]
