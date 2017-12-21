@@ -1,0 +1,55 @@
+{
+  "name": "sdp-server",
+  "version": "0.6.4",
+  "description": "Systeme De Pointage",
+  "bin": [
+    "src/index.js"
+  ],
+  "scripts": {
+    "clean": "rimraf ./coverage",
+    "start": "NODE_ENV=production node ./src/index.js -p 8000",
+    "dev": "NODE_ENV=development nodemon -w ./src ./src/index.js -p 8080 --verbose",
+    "lint": "eslint .",
+    "help": "node node_modules/npm-scripts-help"
+  },
+  "scriptshelp": {
+    "clean": "clean dist/ folder",
+    "start": "start production server (default port to 8000)",
+    "dev": "start dev server (default port to 8080)",
+    "lint": "lint all files in src/ folder",
+    "help": "show this help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/trapcodien/sdp.git"
+  },
+  "keywords": [
+    "pointing",
+    "system"
+  ],
+  "author": "Guillaume ARM",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/trapcodien/sdp#readme",
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "eslint-plugin-node": "^5.2.1",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^5.0.0",
+    "nodemon": "^1.12.1",
+    "npm-scripts-help": "^0.7.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.1.0",
+    "koa-router": "^7.3.0",
+    "ramda": "^0.25.0",
+    "yargs": "^10.0.3"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  }
+}
