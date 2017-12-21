@@ -11,6 +11,7 @@
     "test:coverage": "NODE_ENV=test jest --config jest.config.js --coverage",
     "test:watch": "NODE_ENV=test jest --config jest.config.js --watch",
     "test:all": "npm run test && npm run lint",
+    "lint-staged": "lint-staged",
     "help": "node node_modules/npm-scripts-help"
   },
   "scriptshelp": {
@@ -23,6 +24,11 @@
     "test:watch": "start jest in watch mode",
     "test:all": "start unit tests and lint tests",
     "help": "show this help"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "repository": {
     "type": "git",
@@ -52,6 +58,7 @@
     "eslint-plugin-react": "^7.5.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
+    "lint-staged": "^6.0.0",
     "npm-scripts-help": "^0.7.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
