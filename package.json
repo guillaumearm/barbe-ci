@@ -3,6 +3,7 @@
   "version": "0.6.4",
   "description": "Systeme De Pointage",
   "scripts": {
+    "dev": "cd packages/client && npm run dev",
     "lint:client": "cd packages/client && npm run lint",
     "lint:server": "cd packages/server && npm run lint",
     "lint": "npm run lint:client && npm run lint:server",

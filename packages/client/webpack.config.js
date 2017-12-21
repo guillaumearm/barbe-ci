@@ -30,10 +30,9 @@ const distFolder = path.join(__dirname, './dist');
 module.exports = {
     devtool: isDevelopment ? 'source-map' : '',
     context,
-    entry: reject(isNil)([
-      isDevelopment ? 'webpack-hot-middleware/client' : undefined,
+    entry: [
       './boot/index.js',
-    ]),
+    ],
     output: {
        path: distFolder,
        publicPath: '/',
