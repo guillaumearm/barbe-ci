@@ -4,6 +4,7 @@
   "description": "Systeme De Pointage",
   "scripts": {
     "dev": "cd packages/client && npm run dev",
+    "build": "cd packages/client && npm run build",
     "lint:client": "cd packages/client && npm run lint",
     "lint:server": "cd packages/server && npm run lint",
     "lint": "npm run lint:client && npm run lint:server",
