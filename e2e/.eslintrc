@@ -1,5 +1,6 @@
 {
   "env": {
+    "es6": true,
     "browser": true,
     "node": true,
   },
@@ -12,16 +13,10 @@
     "node"
   ],
   "extends": [
+    "eslint:recommended",
     "plugin:node/recommended"
   ],
   "rules": {
     "node/exports-style": ["error", "module.exports"],
-    "node/no-unpublished-require": ["error", {
-      "allowModules": [
-        "async-describe",
-        "puppeteer",
-        "expect.js"
-      ],
-    }]
   }
 }

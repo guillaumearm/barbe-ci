@@ -5,12 +5,18 @@ const { promisify } = require('util');
 const execFile = promisify(require('child_process').execFile);
 const { pipe, equals } = require('ramda');
 const path = require('path')
+const serve = require('serve');
 const { readdirSync } = require('fs');
 
+const rimraf = promisify(require('rimraf'));
+
 const testOptions = {
+  WEBPACK_BIN: path.resolve(__dirname, '../packages/client/node_modules/.bin/webpack'),
   DIST_FOLDER: 'dist',
   TEST_FOLDER: 'tests',
-  SERVER_PORT: 8081,
+  API_PORT: 8081,
+  SERVER_PORT: 8082,
+  WEBPACK_CONFIG: 'packages/client/webpack.config.js',
 };
 
 const functionalTests = readdirSync(path.join(__dirname, testOptions.TEST_FOLDER))
@@ -23,27 +29,35 @@ const env = { ...process.env, NODE_ENV: 'production' }
 
 const webpackArguments = [
   '--output-path', path.join(__dirname, testOptions.DIST_FOLDER),
+  '--config', path.resolve(__dirname, '..', testOptions.WEBPACK_CONFIG)
 ];
 
 const serverProcessArguments = [
-  path.join(__dirname, '../src/server/index.js'),
-  '-p', testOptions.SERVER_PORT,
+  path.join(__dirname, '../packages/server/src/index.js'),
+  '-p', testOptions.API_PORT,
   '-d', path.join(__dirname, testOptions.DIST_FOLDER),
 ]
 
 describe('e2e testing', async () => {
   let browser;
-  let serverProcess;
+  let staticServer;
+  let apiServer;
   await describe('build client (production mode)', async () => {
-    await execFile('npm', ['run', 'clean:e2e']);
-    await execFile('webpack', webpackArguments, { env });
+    await rimraf(path.join(__dirname, 'dist'))
+    await execFile(testOptions.WEBPACK_BIN, webpackArguments, { env, cwd: path.join(__dirname, '../packages/client') });
   });
 
-  await describe('spawn server process (production mode)', async () => {
-    serverProcess = spawn('node', serverProcessArguments, { env })
+  await describe('spawn static assets server', async () => {
+    staticServer = serve(path.join(__dirname, 'dist'), {
+      port: testOptions.SERVER_PORT,
+    })
+  })
+
+  await describe('spawn server api (production mode)', async () => {
+    apiServer = spawn('node', serverProcessArguments, { env })
     await new Promise(resolve => {
-      serverProcess.stdout.on('data', (data) => {
-        if (new RegExp(`^Listening on ${testOptions.SERVER_PORT}`).test(data.toString())) {
+      apiServer.stdout.on('data', (data) => {
+        if (new RegExp(`^Listening on ${testOptions.API_PORT}`).test(data.toString())) {
           resolve(data.toString())
         }
       })
@@ -62,9 +76,13 @@ describe('e2e testing', async () => {
     }))
   });
 
-  await describe('close server', async () => {
-    serverProcess.stdin.pause()
-    serverProcess.kill();
+  await describe('close api', async () => {
+    apiServer.stdin.pause();
+    apiServer.kill();
+  })
+
+  await describe('close static server', async () => {
+    staticServer.stop();
   })
 
   await describe('close browser', async () => {
