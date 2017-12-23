@@ -65,7 +65,13 @@ describe('e2e testing', async () => {
   });
 
   await describe('launch chrome headless client', async () => {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--enable-logging',
+      ],
+    });
   })
 
   await describe('functional tests', async () => {
