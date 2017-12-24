@@ -4,7 +4,6 @@
   "description": "Systeme De Pointage",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server",
-    "build": "rimraf dist && NODE_ENV=production webpack && docker build --rm=true --force-rm=true -t sdp-client .",
     "clean": "rimraf ./dist ./coverage",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --config jest.config.js",
@@ -12,17 +11,21 @@
     "test:watch": "NODE_ENV=test jest --config jest.config.js --watch",
     "test:all": "npm run test && npm run lint",
     "lint-staged": "lint-staged",
+    "docker:make": "./make",
+    "docker:start": "./start",
+    "docker:stop": "./stop",
     "help": "node node_modules/npm-scripts-help"
   },
   "scriptshelp": {
-    "build": "build client docker image for production",
-    "build:dev": "build client docker image for development",
     "clean": "clean dist/ folder",
     "lint": "lint all files in src/ folder",
     "test": "start jest",
     "test:coverage": "start jest in coverage mode",
     "test:watch": "start jest in watch mode",
     "test:all": "start unit tests and lint tests",
+    "docker:make": "build client docker image for production",
+    "docker:start": "start nginx container on port 8080",
+    "docker:stop": "stop docker container",
     "help": "show this help"
   },
   "lint-staged": {

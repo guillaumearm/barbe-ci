@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+function run_webpack() {
+  docker run --rm -it -v $SCRIPTPATH:/app jmfirth/webpack $*
+}
+
+run_webpack npm install --no-bin-links \
+&& git checkout $SCRIPTPATH/package-lock.json \
+&& run_webpack webpack
+
+docker build --rm=true --force-rm=true -t sdp-client $SCRIPTPATH
