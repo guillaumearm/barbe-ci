@@ -19,26 +19,31 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
 # Add pptr user.
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
+    && mkdir -p /home/pptruser/e2e \
     && chown -R pptruser:pptruser /home/pptruser
 
-WORKDIR /home/pptruser
-ADD . .
-RUN chown -R pptruser:pptruser .
+WORKDIR /home/pptruser/e2e
 
-
-# Run user as non privileged.
-USER pptruser
 ENV NODE_ENV=development
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
+ADD . .
+
+# Run user as non privileged.
+RUN chown -R pptruser:pptruser .
+USER pptruser
+
+### Client install
 WORKDIR packages/client
 RUN npm install
 WORKDIR ../../
 
+### Server install
 WORKDIR packages/server
 RUN npm install
 WORKDIR ../../
 
+### e2e tools install
 RUN npm install
 
 ENV NODE_ENV=production

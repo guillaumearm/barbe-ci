@@ -1,3 +1,2 @@
 #!/bin/bash
-
-docker run --rm sdp-e2e
+docker run -it --rm -v $PWD:/home/pptruser/e2e sdp-e2e
