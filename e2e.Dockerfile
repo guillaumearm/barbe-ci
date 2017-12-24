@@ -28,7 +28,7 @@ RUN chown -R pptruser:pptruser .
 
 # Run user as non privileged.
 USER pptruser
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 WORKDIR packages/client
@@ -41,4 +41,5 @@ WORKDIR ../../
 
 RUN npm install
 
+ENV NODE_ENV=production
 ENTRYPOINT node e2e
