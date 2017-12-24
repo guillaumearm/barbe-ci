@@ -67,6 +67,7 @@ describe('e2e testing', async () => {
 
   await describe('launch chrome headless client', async () => {
     browser = await puppeteer.launch({
+      executablePath: process.env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD ? 'google-chrome-unstable' : undefined,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',

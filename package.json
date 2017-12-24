@@ -3,11 +3,8 @@
   "version": "0.6.4",
   "description": "Systeme De Pointage",
   "scripts": {
-    "dev": "cd packages/client && npm run dev",
-    "build": "cd packages/client && npm run build",
     "build:integration": "docker build --rm -t sdp-e2e -f e2e.Dockerfile .",
-    "integration": "docker run --rm sdp-e2e",
-    "test:integration": "NODE_ENV=production node e2e",
+    "test:integration": "docker run --rm sdp-e2e",
     "ti": "npm run test:integration",
     "test": "npm run test:integration",
     "lint:client": "cd packages/client && npm run lint",
@@ -22,8 +19,6 @@
     "help": "node node_modules/npm-scripts-help"
   },
   "scriptshelp": {
-    "lint:client": "Lint client files",
-    "lint:server": "Lint client files",
     "lint": "lint all project files (client and server)",
     "help": "show this help"
   },
@@ -51,7 +46,8 @@
     "puppeteer": "^0.13.0",
     "ramda": "^0.25.0",
     "rimraf": "^2.6.2",
-    "serve": "^6.4.3"
+    "serve": "^6.4.3",
+    "webpack": "^3.10.0"
   },
   "engines": {
     "node": ">=8.9.0"
