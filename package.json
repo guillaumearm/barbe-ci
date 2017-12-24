@@ -3,6 +3,7 @@
   "version": "0.6.4",
   "description": "Systeme De Pointage",
   "scripts": {
+    "clean": "rimraf e2e/dist && cd packages/client && npm run clean",
     "build:integration": "./e2e.make",
     "test:integration": "./e2e.start",
     "ti": "npm run test:integration",
