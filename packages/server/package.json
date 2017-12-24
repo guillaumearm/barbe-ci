@@ -1,22 +1,25 @@
 {
-  "name": "sdp-server",
+  "name": "sdp-api",
   "version": "0.6.4",
   "description": "Systeme De Pointage",
   "bin": [
     "src/index.js"
   ],
   "scripts": {
-    "clean": "rimraf ./coverage",
-    "start": "NODE_ENV=production node ./src/index.js -p 8000",
     "dev": "NODE_ENV=development nodemon -w ./src ./src/index.js -p 8080 --verbose",
+    "start": "NODE_ENV=production node ./src/index.js -p 8000",
+    "build": "docker build --rm=true --force-rm=true -t sdp-api .",
+    "clean": "rimraf ./coverage",
+    "test": "npm run lint",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
     "help": "node node_modules/npm-scripts-help"
   },
   "scriptshelp": {
-    "clean": "clean dist/ folder",
-    "start": "start production server (default port to 8000)",
     "dev": "start dev server (default port to 8080)",
+    "start": "start production server (default port to 8000)",
+    "build": "build server docker image for production",
+    "test": "start server tests",
     "lint": "lint all files in src/ folder",
     "help": "show this help"
   },
