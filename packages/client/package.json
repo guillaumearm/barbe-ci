@@ -1,6 +1,6 @@
 {
   "name": "sdp-client",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "description": "Systeme De Pointage",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server",
