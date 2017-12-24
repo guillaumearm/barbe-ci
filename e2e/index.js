@@ -50,6 +50,7 @@ describe('e2e testing', async () => {
   await describe('spawn static assets server', async () => {
     staticServer = serve(path.join(__dirname, 'dist'), {
       port: testOptions.SERVER_PORT,
+      clipless: true,
     })
   })
 
