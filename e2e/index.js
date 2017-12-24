@@ -96,4 +96,8 @@ describe('e2e testing', async () => {
   await describe('close browser', async () => {
     await browser.close();
   })
+
+  await describe('remove dist folder', async () => {
+    await rimraf(path.join(__dirname, 'dist'))
+  })
 })
