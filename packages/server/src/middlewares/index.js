@@ -2,7 +2,6 @@ const { reject, isNil } = require('ramda');
 const bodyParser = require('koa-bodyparser');
 
 const router = require('./router');
-const assets = require('./assets');
 
 module.exports = (serverOpts) => reject(isNil)([
   serverOpts.VERBOSE ? require('koa-logger')() : undefined,
@@ -10,5 +9,4 @@ module.exports = (serverOpts) => reject(isNil)([
     limit: '10mb',
   }),
   router.routes(),
-  ...assets(serverOpts),
 ])

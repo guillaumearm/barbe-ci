@@ -1,5 +1,5 @@
 module.exports = {
-  rootDir: '../..',
+  rootDir: '.',
   globals: {
     'process.env.NODE_ENV': 'test'
   },
@@ -12,7 +12,7 @@ module.exports = {
     '<rootDir>/dist/'
   ],
   moduleDirectories: [
-    'src/client',
+    'src',
     'node_modules'
   ]
 }

@@ -1,5 +1,6 @@
 {
   "env": {
+    "es6": true,
     "node": true,
   },
   "parserOptions": {
@@ -11,16 +12,11 @@
     "node"
   ],
   "extends": [
+    "eslint:recommended",
     "plugin:node/recommended"
   ],
   "rules": {
-    "node/exports-style": ["error", "module.exports"],
-    "node/no-unpublished-require": ["error", {
-      "allowModules": [
-        "webpack",
-        "webpack-dev-middleware",
-        "webpack-hot-middleware"
-      ],
-    }]
+    "no-multi-spaces": ["error"],
+    "node/exports-style": ["error", "module.exports"]
   }
 }

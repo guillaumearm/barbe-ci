@@ -10,6 +10,7 @@
     "react"
   ],
   "extends": [
+    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/errors",
     "plugin:import/warnings"
@@ -24,12 +25,15 @@
   ],
   "env": {
     "browser": true,
+    "es6": true,
   },
   "globals": {
     "module": true,
     "process": true,
   },
-
+  "rules": {
+    "no-multi-spaces": ["error"],
+  },
   "settings": {
     "import/resolver": {
       "webpack": {

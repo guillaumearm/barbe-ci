@@ -2,7 +2,7 @@
 const { reject, isNil } = require('ramda');
 const webpack = require('webpack');
 const path = require('path');
-const context = path.resolve(__dirname, 'src/client');
+const context = path.resolve(__dirname, 'src');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -30,17 +30,16 @@ const distFolder = path.join(__dirname, './dist');
 module.exports = {
     devtool: isDevelopment ? 'source-map' : '',
     context,
-    entry: reject(isNil)([
-      isDevelopment ? 'webpack-hot-middleware/client' : undefined,
+    entry: [
       './boot/index.js',
-    ]),
+    ],
     output: {
        path: distFolder,
        publicPath: '/',
        filename: 'app.bundle.js',
     },
     resolve: {
-      modules: ['src/client', 'node_modules']
+      modules: ['src', 'node_modules']
     },
     module: {
       loaders: [
