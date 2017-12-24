@@ -1,4 +1,4 @@
-{
+  {
   "name": "sdp-api",
   "version": "0.6.4",
   "description": "Systeme De Pointage",
@@ -8,19 +8,24 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon -w ./src ./src/index.js -p 8080 --verbose",
     "start": "NODE_ENV=production node ./src/index.js -p 8000",
-    "build": "docker build --rm=true --force-rm=true -t sdp-api .",
     "clean": "rimraf ./coverage",
     "test": "npm run lint",
+    "test:all": "npm run lint",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
+    "docker:make": "./make",
+    "docker:start": "./start",
+    "docker:stop": "/.stop",
     "help": "node node_modules/npm-scripts-help"
   },
   "scriptshelp": {
     "dev": "start dev server (default port to 8080)",
     "start": "start production server (default port to 8000)",
-    "build": "build server docker image for production",
     "test": "start server tests",
     "lint": "lint all files in src/ folder",
+    "docker:make": "build server docker image for production",
+    "docker:start": "start api on port 8081",
+    "docker:stop": "stop api",
     "help": "show this help"
   },
   "lint-staged": {
