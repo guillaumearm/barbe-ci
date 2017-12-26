@@ -6,8 +6,8 @@
     "src/index.js"
   ],
   "scripts": {
-    "dev": "NODE_ENV=development nodemon -w ./src ./src/index.js -p 8080 --verbose",
-    "start": "NODE_ENV=production node ./src/index.js -p 8000",
+    "dev": "NODE_ENV=development nodemon -w ./src ./src/index.js -- -p 8080 --verbose",
+    "start": "NODE_ENV=production node ./src/index.js -p 8000 --verbose",
     "clean": "rimraf ./coverage",
     "test": "npm run lint",
     "test:all": "npm run lint",
