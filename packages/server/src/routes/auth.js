@@ -1,5 +1,6 @@
 const passport = require('koa-passport');
 const bb = require('../utils/bitbucket');
+const { getCiRefreshToken } = require('../store/selectors')
 const { userLogout } = require('../store/actions');
 
 module.exports = (router) => {
@@ -11,8 +12,12 @@ module.exports = (router) => {
   )
 
   router.get('/auth', async ctx => {
-    ctx.body = 'OK'
-    if (ctx.isAuthenticated()) {
+    const { getState } = ctx.store
+    if (ctx.isAuthenticated() && !getCiRefreshToken(getState())) {
+      ctx.logout();
+      return ctx.redirect('/auth');
+    }
+    else if (ctx.isAuthenticated()) {
       return ctx.redirect('/auth/success');
     } else {
       return passport.authenticate('bitbucket')(ctx)
