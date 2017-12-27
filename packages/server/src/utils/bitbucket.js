@@ -10,6 +10,7 @@ const {
   getCiAccessToken,
   getCiRefreshToken,
 } = require('../store/selectors');
+const { updateTokens } = require('../store/actions')
 
 const get = async (ctx, endpoint, options = {}) => {
   const { getState, dispatch } = ctx.store;
@@ -44,13 +45,7 @@ const get = async (ctx, endpoint, options = {}) => {
     if (e.response.status === 401) {
       const refreshResult = await makeRefresh();
       const { access_token, refresh_token } = JSON.parse(refreshResult.body)
-      dispatch({
-        type: 'UPDATE_TOKENS',
-        payload: {
-          accessToken: access_token,
-          refreshToken: refresh_token,
-        },
-      });
+      dispatch(updateTokens(access_token, refresh_token))
       return await makeQuery()
     } else {
       throw e;

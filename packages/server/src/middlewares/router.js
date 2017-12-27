@@ -1,6 +1,7 @@
 const passport = require('koa-passport');
 const createRouter = require('koa-router');
 const bb = require('../utils/bitbucket');
+const { userLogout } = require('../store/actions');
 
 const router = createRouter();
 
@@ -24,7 +25,7 @@ router.get('/auth', async ctx => {
 
 router.get('/auth/logout', async (ctx) => {
   if (ctx.isAuthenticated()) {
-    ctx.store.dispatch({ type: 'USER_LOGOUT', payload: { uuid: ctx.state.user.uuid } })
+    ctx.store.dispatch(userLogout(ctx.state.user.uuid));
     ctx.logout()
   }
   ctx.type = 'html';
