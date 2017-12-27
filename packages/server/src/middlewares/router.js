@@ -25,7 +25,10 @@ router.get('/auth', async ctx => {
 })
 
 router.get('/auth/logout', async (ctx) => {
-  ctx.logout()
+  if (ctx.isAuthenticated()) {
+    ctx.store.dispatch({ type: 'USER_LOGOUT', payload: { uuid: ctx.state.user.uuid } })
+    ctx.logout()
+  }
   ctx.type = 'html';
   const message = ctx.query.message || 'DISCONNECTED'
   ctx.body = `${message} - <a href="/auth">Click here to connect</a>`
@@ -42,7 +45,7 @@ router.get('/auth/success', async (ctx) => {
       ctx.redirect(`/auth/logout?message=${message}`)
     }
   } else {
-    ctx.body = 'NOT CONNECTED - <a href="/auth">Click here to connect</a>'
+    ctx.redirect('/auth/logout')
   }
 })
 

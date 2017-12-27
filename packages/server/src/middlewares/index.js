@@ -4,12 +4,15 @@ const passport = require('koa-passport');
 
 const router = require('./router');
 
-module.exports = (serverOpts) => reject(isNil)([
-  serverOpts.VERBOSE ? require('koa-logger')() : undefined,
-  bodyParser({
-    limit: '10mb',
-  }),
-  passport.initialize(),
-  passport.session(),
-  router.routes(),
-])
+module.exports = (app) => {
+  const { VERBOSE } = app.context.store.getState().serverConfiguration;
+  return reject(isNil)([
+    VERBOSE ? require('koa-logger')() : undefined,
+    bodyParser({
+      limit: '10mb',
+    }),
+    passport.initialize(),
+    passport.session(),
+    router.routes(),
+  ])
+}
