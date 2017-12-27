@@ -8,8 +8,7 @@ const updateTokens = (state, action) => applyTo(state)(pipe(
 module.exports = (state = {}, action) => {
   switch (action.type) {
     case 'USER_LOGIN': {
-      const nextState = updateTokens(state, action);
-      return nextState
+      return updateTokens(state, action);
     }
     case 'UPDATE_TOKENS': {
       return updateTokens(state, action);
