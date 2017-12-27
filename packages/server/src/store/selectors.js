@@ -1,5 +1,5 @@
 module.exports = {
-  ...require('./credentials/selectors'),
-  ...require('./serverConfiguration/selectors'),
-  ...require('./db/selectors'),
+  ...require('./modules/credentials/selectors'),
+  ...require('./modules/serverConfiguration/selectors'),
+  ...require('./modules/db/selectors'),
 }
