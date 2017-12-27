@@ -8,14 +8,14 @@ const getMiddlewares = require('./middlewares');
 const createStore = require('./store');
 
 const app = new Koa();
-app.keys = ['sdp']
+app.keys = ['simpleci']
 app.use(session({}, app))
 
 const initialState = {
   serverConfiguration,
   credentials: {
-    BITBUCKET_CLIENT_SECRET: 's9DWJqacAv5bRdkzqPEXLCRNvfrrYYtH',
-    BITBUCKET_CLIENT_ID: 'fwrGpD44hvsE3LpSMx',
+    clientId: 'fwrGpD44hvsE3LpSMx',
+    clientSecret: 's9DWJqacAv5bRdkzqPEXLCRNvfrrYYtH',
   }
 }
 

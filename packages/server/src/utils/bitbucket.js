@@ -7,9 +7,9 @@ const requestPost = promisify(require('request').post)
 const {
   getClientId,
   getClientSecret,
-  getAccessToken,
-  getRefreshToken,
-} = require('../store/credentials/selectors');
+  getCiAccessToken,
+  getCiRefreshToken,
+} = require('../store/selectors');
 
 const get = async (ctx, endpoint, options = {}) => {
   const { getState, dispatch } = ctx.store;
@@ -18,7 +18,7 @@ const get = async (ctx, endpoint, options = {}) => {
     {
       form: {
         grant_type: 'refresh_token',
-        refresh_token: getRefreshToken(getState()),
+        refresh_token: getCiRefreshToken(getState()),
       },
       auth: {
         username: getClientId(getState()),
@@ -30,7 +30,7 @@ const get = async (ctx, endpoint, options = {}) => {
     `https://api.bitbucket.org/${endpoint}`,
     mergeDeepLeft(options, {
       params: {
-        access_token: getAccessToken(getState()),
+        access_token: getCiAccessToken(getState()),
       },
       auth: {
         username: getClientId(getState()),

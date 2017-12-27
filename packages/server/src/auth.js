@@ -1,7 +1,7 @@
 const passport = require('koa-passport')
 const { v4 } = require('uuid');
 
-const { getClientId, getClientSecret } = require('./store/credentials/selectors');
+const { getClientId, getClientSecret } = require('./store/selectors');
 
 const registerAuth = (app) => {
   const { dispatch, getState } = app.context.store;

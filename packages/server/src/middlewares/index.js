@@ -3,9 +3,11 @@ const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 
 const router = require('./router');
+const { getServerConfiguration } = require('../store/selectors');
 
 module.exports = (app) => {
-  const { VERBOSE } = app.context.store.getState().serverConfiguration;
+  const { getState } = app.context.store
+  const { VERBOSE } = getServerConfiguration(getState());
   return reject(isNil)([
     VERBOSE ? require('koa-logger')() : undefined,
     bodyParser({

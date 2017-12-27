@@ -1,9 +1,10 @@
 const { defaultTo } = require('ramda');
 const { combineReducers } = require('redux');
 
-const credentials = require('./credentials/reducer')
+const db = require('./db/reducer');
 
 module.exports = combineReducers({
+  db,
+  credentials: defaultTo({}),
   serverConfiguration: defaultTo({}),
-  credentials,
 });

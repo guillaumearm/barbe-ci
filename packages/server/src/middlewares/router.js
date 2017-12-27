@@ -1,10 +1,8 @@
 const passport = require('koa-passport');
 const createRouter = require('koa-router');
-const api = require('../api');
 const bb = require('../utils/bitbucket');
 
 const router = createRouter();
-router.post('/api', api);
 
 /* ### AUTH ### */
 
