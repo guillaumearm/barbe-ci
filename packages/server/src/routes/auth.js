@@ -49,11 +49,6 @@ module.exports = (router) => {
     }
   })
 
-  router.post('/bitbucket_hook', async (ctx) => {
-    // console.log(JSON.stringify(ctx.request.body, null, 2));
-    ctx.body = '';
-  });
-
   router.get('/auth/failure', (ctx) => {
     ctx.body = 'login failure'
   })
