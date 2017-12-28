@@ -1,0 +1,9 @@
+const { propOr } = require('ramda');
+
+const getDb = propOr({}, 'db');
+
+module.exports = {
+  ...require('./ci/selectors'),
+  ...require('./users/selectors'),
+  getDb,
+}
