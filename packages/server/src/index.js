@@ -6,6 +6,7 @@ const session = require('koa-session')
 const serverConfiguration = require('./configuration');
 const getMiddlewares = require('./middlewares');
 const createStore = require('./store');
+const { loadDb } = require('./store/actions');
 
 const app = new Koa();
 app.keys = ['simpleci']
@@ -19,10 +20,13 @@ const initialState = {
   }
 }
 
-app.context.store = createStore(initialState);
+const store = createStore(initialState)
+app.context.store = store;
+
+store.dispatch(loadDb())
 
 require('./auth')(app);
 getMiddlewares(app).forEach(middleware => app.use(middleware));
 
 app.listen(serverConfiguration.PORT)
-console.log(`Listening on ${serverConfiguration.PORT}...`);
+console.log(`Listening on ${serverConfiguration.PORT}.`);

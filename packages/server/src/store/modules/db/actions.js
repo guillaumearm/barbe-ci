@@ -13,8 +13,14 @@ const userLogout = (uuid) => ({
   payload: { uuid },
 })
 
+const loadDb = () => ({
+  type: 'LOAD_DB',
+  payload: {},
+})
+
 module.exports = {
   updateTokens,
   userLogin,
   userLogout,
+  loadDb,
 }

@@ -8,14 +8,14 @@ const getOwnProp = (property) => (state, ownProps = {}) => ownProps[property]
 const getUser = createSelector(
   getUsers,
   getOwnProp('name'),
-  getOwnProp('uuid'),
-  (users, byName, byUuid) => {
+  getOwnProp('sessionUuid'),
+  (users, byName, bySessionUuid) => {
     if (byName) {
       return users[byName]
-    } else if (byUuid) {
-      return find(propEq('uuid', byUuid), values(users))
+    } else if (bySessionUuid) {
+      return find(propEq('sessionUuid', bySessionUuid), values(users))
     }
-    throw new Error('getUser should have name or uuid property')
+    throw new Error('getUser should have name or sessionUuid property')
   }
 )
 

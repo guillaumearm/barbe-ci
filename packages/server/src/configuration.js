@@ -6,7 +6,7 @@ var argv = require('yargs')
   .describe('version', 'Print current version')
   .string('db')
     .describe('db', 'path to the db folder')
-    .defaults('db', path.resolve(__dirname, '..', 'db'))
+    .defaults('db', path.resolve(__dirname, '..', 'db.json'))
   .boolean('verbose')
     .alias('v', 'verbose')
     .describe('verbose', 'print server log on stdout')
@@ -19,7 +19,7 @@ var argv = require('yargs')
   .argv;
 
 module.exports = {
-  DB: argv.db,
+  DBPATH: argv.db,
   PORT: argv.port,
   VERBOSE: argv.verbose,
   argv
