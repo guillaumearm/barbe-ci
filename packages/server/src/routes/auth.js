@@ -1,5 +1,5 @@
 const passport = require('koa-passport');
-const bb = require('../utils/bitbucket');
+const bb = require('../helpers/bitbucket');
 const { getCiRefreshToken } = require('../store/selectors')
 const { userLogout } = require('../store/actions');
 
