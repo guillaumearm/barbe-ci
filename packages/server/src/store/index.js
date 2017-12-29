@@ -3,7 +3,7 @@ const rootReducer = require('./reducer');
 
 const middlewares = [
   require('./modules/db/middleware'),
-  require('./modules/db/logs/middleware'),
+  require('./modules/logs/middleware'),
 ]
 
 module.exports = (initialState) => {

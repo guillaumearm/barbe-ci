@@ -23,5 +23,4 @@ module.exports = {
   userLogin,
   userLogout,
   loadDb,
-  ...require('./logs/actions'),
 }

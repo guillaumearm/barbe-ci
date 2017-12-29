@@ -1,5 +1,5 @@
 const { assocPath } = require('ramda')
-const { getIsDebug } = require('../../../selectors');
+const { getIsDebug } = require('../../selectors');
 
 module.exports = ({ getState }) => next => action => {
   const isDebug = getIsDebug(getState());
