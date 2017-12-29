@@ -1,6 +1,11 @@
 const { path } = require('ramda');
 
-module.exports = (state = [], action) => {
+const initialState = [];
+
+module.exports = (state = initialState, action) => {
+  if (action.type === 'CLEAN_LOGS') {
+    return initialState;
+  }
   if (path(['meta', 'debug'], action)) {
     return [action, ...state]
   }
