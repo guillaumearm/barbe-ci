@@ -19,6 +19,7 @@ var argv = require('yargs')
   .argv;
 
 module.exports = {
+  NODE_ENV: process.env.NODE_ENV,
   DBPATH: argv.db,
   PORT: argv.port,
   VERBOSE: argv.verbose,

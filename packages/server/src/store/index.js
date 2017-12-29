@@ -1,6 +1,10 @@
 const { createStore, applyMiddleware } = require('redux');
-const middlewares = require('./middlewares');
 const rootReducer = require('./reducer');
+
+const middlewares = [
+  require('./modules/db/middleware'),
+  require('./modules/db/log/middleware'),
+]
 
 module.exports = (initialState) => {
   return createStore(rootReducer, initialState, applyMiddleware(...middlewares));
