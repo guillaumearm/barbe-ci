@@ -1,13 +1,13 @@
 const { combineReducers } = require('redux')
 const { composeReducers } = require('../../utils');
 
-const log = require('./log/reducer');
+const logs = require('./logs/reducer');
 const users = require('./users/reducer');
 const ci = require('./ci/reducer');
 
 module.exports = composeReducers(
   combineReducers({
-    log,
+    logs,
     users,
     ci,
   }),
