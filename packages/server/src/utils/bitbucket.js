@@ -28,7 +28,7 @@ const get = async (ctx, endpoint, options = {}) => {
     }
   )
   const makeQuery = () => axios.get(
-    `https://api.bitbucket.org/${endpoint}`,
+    endpoint,
     mergeDeepLeft(options, {
       params: {
         access_token: getCiAccessToken(getState()),

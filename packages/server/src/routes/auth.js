@@ -38,7 +38,7 @@ module.exports = (router) => {
     ctx.type = 'html'
     if (ctx.isAuthenticated()) {
       try {
-        const response = await bb.get(ctx, '2.0/repositories/trapcodien/sdp');
+        const response = await bb.get(ctx, 'https://api.bitbucket.org/2.0/repositories/trapcodien/sdp');
         ctx.body = `${response.data.slug} : Bitbucket account linked - <a href="/auth/logout">Click here to disconnect</a>`
       } catch (e) {
         const message = `${e.message} : ${e.response.data}`
