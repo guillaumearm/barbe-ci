@@ -3,6 +3,7 @@ const createRouter = require('koa-router');
 const routes = [
   require('./auth'),
   require('./hooks'),
+  require('./debug'),
 ];
 
 const router = createRouter();
