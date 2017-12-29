@@ -6,7 +6,7 @@ module.exports = (router) => {
     const body = ctx.request.body;
     const { dispatch } = ctx.store;
     // eslint-disable-next-line no-console
-    if (body.push) {
+    if (body.push && body.repository.scm === 'git') {
       dispatch({
         type: 'GIT_PUSH',
         payload: body,
