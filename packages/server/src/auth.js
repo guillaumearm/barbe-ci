@@ -2,10 +2,10 @@ const passport = require('koa-passport')
 const { v4 } = require('uuid');
 
 const { getClientId, getClientSecret, getUser } = require('./store/selectors');
-const { userLogin } = require('./store/actions')
 
 const registerAuth = (app) => {
-  const { dispatch, getState } = app.context.store;
+  const store = app.context.store;
+  const { getState } = store;
   passport.serializeUser(function(user, done) {
     done(null, user.sessionUuid)
   })
@@ -22,7 +22,7 @@ const registerAuth = (app) => {
     },
     function(accessToken, refreshToken, profile, done) {
       const user = { sessionUuid: v4(), accessToken, refreshToken, profile }
-      dispatch(userLogin(user))
+      store.userLogin(user)
       done(null, user);
     }
   ));

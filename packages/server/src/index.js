@@ -2,11 +2,11 @@
 /* eslint-disable no-console */
 
 const Koa = require('koa');
-const session = require('koa-session')
+const session = require('koa-session');
+
 const serverConfiguration = require('./configuration');
 const getMiddlewares = require('./middlewares');
 const createStore = require('./store');
-const { loadDb } = require('./store/actions');
 
 const app = new Koa();
 app.keys = ['simpleci']
@@ -21,9 +21,8 @@ const initialState = {
 }
 
 const store = createStore(initialState)
+store.loadDb();
 app.context.store = store;
-
-store.dispatch(loadDb())
 
 require('./auth')(app);
 getMiddlewares(app).forEach(middleware => app.use(middleware));
