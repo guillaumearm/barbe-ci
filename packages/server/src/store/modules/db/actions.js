@@ -18,10 +18,16 @@ const loadDb = () => ({
   payload: {},
 })
 
+const bbGet = (endpoint, options = {}) => ({
+  type: 'BITBUCKET_GET',
+  payload: { request: { endpoint, options } },
+})
+
 module.exports = {
   updateTokens,
   userLogin,
   userLogout,
   loadDb,
+  bbGet,
   ...require('./repositories/actions'),
 }

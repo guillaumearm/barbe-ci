@@ -4,7 +4,7 @@ const fs = require('fs');
 const { dirname } = require('path');
 const { promisify } = require('util');
 
-const { getDb, getDbPath } = require('../../selectors')
+const { getDb, getDbPath } = require('../../../selectors')
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);

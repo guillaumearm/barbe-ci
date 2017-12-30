@@ -1,7 +1,6 @@
 const passport = require('koa-passport');
-const bb = require('../helpers/bitbucket');
 const { getCiRefreshToken } = require('../store/selectors')
-const { userLogout } = require('../store/actions');
+const { bbGet, userLogout } = require('../store/actions');
 
 module.exports = (router) => {
   router.get('/auth/bitbucket/callback',
@@ -38,8 +37,9 @@ module.exports = (router) => {
     ctx.type = 'html'
     if (ctx.isAuthenticated()) {
       try {
-        const response = await bb.get(ctx, 'https://api.bitbucket.org/2.0/repositories/trapcodien/sdp');
-        ctx.body = `${response.data.slug} : Bitbucket account linked - <a href="/auth/logout">Click here to disconnect</a>`
+        const response = await ctx.store.dispatch(bbGet('https://api.bitbucket.org/2.0/repositories/trapcodien/sdp'));
+        // ctx.body = `${response.data.slug} : Bitbucket account linked - <a href="/auth/logout">Click here to disconnect</a>`
+        ctx.body = response;
       } catch (e) {
         const message = `${e.message} : ${e.response.data}`
         ctx.redirect(`/auth/logout?message=${message}`)

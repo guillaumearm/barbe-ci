@@ -9,11 +9,10 @@ const {
   getClientSecret,
   getCiAccessToken,
   getCiRefreshToken,
-} = require('../store/selectors');
-const { updateTokens } = require('../store/actions')
+} = require('../../../../selectors');
+const { updateTokens } = require('../../../../actions')
 
-const get = async (ctx, endpoint, options = {}) => {
-  const { getState, dispatch } = ctx.store;
+const get = async ({ getState, dispatch }, endpoint, options = {}) => {
   const makeRefresh = () => requestPost(
     `https://bitbucket.org/site/oauth2/access_token`,
     {
