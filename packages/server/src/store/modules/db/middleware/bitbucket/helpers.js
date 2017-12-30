@@ -4,25 +4,17 @@ const { promisify } = require('util');
 const axios = require('axios');
 const requestPost = promisify(require('request').post)
 
-const {
-  getClientId,
-  getClientSecret,
-  getCiAccessToken,
-  getCiRefreshToken,
-} = require('../../../../selectors');
-const { updateTokens } = require('../../../../actions')
-
-const get = async ({ getState, dispatch }, endpoint, options = {}) => {
+const get = async (store, endpoint, options = {}) => {
   const makeRefresh = () => requestPost(
     `https://bitbucket.org/site/oauth2/access_token`,
     {
       form: {
         grant_type: 'refresh_token',
-        refresh_token: getCiRefreshToken(getState()),
+        refresh_token: store.getCiRefreshToken(),
       },
       auth: {
-        username: getClientId(getState()),
-        password: getClientSecret(getState()),
+        username: store.getClientId(),
+        password: store.getClientSecret(),
       },
     }
   )
@@ -30,11 +22,11 @@ const get = async ({ getState, dispatch }, endpoint, options = {}) => {
     endpoint,
     mergeDeepLeft(options, {
       params: {
-        access_token: getCiAccessToken(getState()),
+        access_token: store.getCiAccessToken(),
       },
       auth: {
-        username: getClientId(getState()),
-        password: getClientSecret(getState()),
+        username: store.getClientId(),
+        password: store.getClientSecret(),
       },
     })
   );
@@ -44,7 +36,7 @@ const get = async ({ getState, dispatch }, endpoint, options = {}) => {
     if (e.response.status === 401) {
       const refreshResult = await makeRefresh();
       const { access_token, refresh_token } = JSON.parse(refreshResult.body)
-      dispatch(updateTokens(access_token, refresh_token))
+      store.updateTokens(access_token, refresh_token)
       return await makeQuery()
     } else {
       throw e;

@@ -4,8 +4,6 @@ const fs = require('fs');
 const { dirname } = require('path');
 const { promisify } = require('util');
 
-const { getDb, getDbPath } = require('../../../selectors')
-
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
@@ -28,9 +26,9 @@ const writeDb = async (dbPath, db) => {
   return await writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
 }
 
-module.exports = ({ getState }) => next => async action => {
+module.exports = (store) => next => async action => {
   if (action.type === 'LOAD_DB') {
-    const dbPath = getDbPath(getState());
+    const dbPath = store.getDbPath();
     try {
       const db = await readDb(dbPath)
       return await next(assocPath(['payload', 'db'], db, action))
@@ -40,7 +38,7 @@ module.exports = ({ getState }) => next => async action => {
       }
       log('DB missing.');
       log('Creating fresh DB...');
-      const db = getDb(getState());
+      const db = store.getDb();
       await writeDb(dbPath, db)
       try {
         log('DB created.');
@@ -50,12 +48,12 @@ module.exports = ({ getState }) => next => async action => {
     }
     return await next(action);
   }
-  const previousDb = getDb(getState());
+  const previousDb = store.getDb();
   const nexted = await next(action)
-  const currentDb = getDb(getState());
+  const currentDb = store.getDb();
   if (previousDb !== currentDb) {
     try {
-      const dbPath = getDbPath(getState());
+      const dbPath = store.getDbPath();
       await writeDb(dbPath, currentDb);
     } catch (e) {
       log(e.message)
