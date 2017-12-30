@@ -31,9 +31,16 @@ const bindSelectors = (selectors, getState) => (
   map(selector => (...args) => selector(getState(), ...args), selectors)
 )
 
+const toReducer = (u, initialState) => (
+  (state = initialState, action) => (
+    u(action)(state)
+  )
+)
+
 module.exports = {
   pipeMiddlewares,
   pipeReducers,
   composeReducers,
   bindSelectors,
+  toReducer,
 }

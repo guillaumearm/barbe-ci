@@ -1,13 +1,16 @@
-const { assoc } = require('ramda');
+const { identity, assoc } = require('ramda');
+const { toReducer } = require('../../../utils')
 
-module.exports = (state = {}, action) => {
+const initialState = {}
+
+module.exports = toReducer((action) => {
   switch (action.type) {
     case 'USER_LOGIN': {
       const user = action.payload;
-      return assoc(user.profile.username, user, state);
+      return assoc(user.profile.username, user);
     }
     default: {
-      return state;
+      return identity;
     }
   }
-}
+}, initialState)

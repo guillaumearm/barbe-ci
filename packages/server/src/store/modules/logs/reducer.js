@@ -1,13 +1,14 @@
-const { path } = require('ramda');
+const { identity, always, path, concat } = require('ramda');
+const { toReducer } = require('../../utils')
 
 const initialState = [];
 
-module.exports = (state = initialState, action) => {
+module.exports = toReducer((action) => {
   if (action.type === 'CLEAN_LOGS') {
-    return initialState;
+    return always(initialState);
   }
   if (path(['meta', 'debug'], action)) {
-    return [action, ...state]
+    return concat([action])
   }
-  return state
-}
+  return identity;
+}, initialState)

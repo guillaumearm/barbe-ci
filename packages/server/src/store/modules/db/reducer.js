@@ -1,12 +1,13 @@
+const { always, identity } = require('ramda');
 const { combineReducers } = require('redux')
-const { composeReducers } = require('../../utils');
+const { toReducer, composeReducers } = require('../../utils');
 
-const loadDbReducer = (state, action) => {
-  if (action.type === 'LOAD_DB') {
-    return action.payload.db || state;
+const loadDbReducer = toReducer((action) => {
+  if (action.type === 'LOAD_DB' && action.payload.db) {
+    return always(action.payload.db);
   }
-  return state
-};
+  return identity;
+});
 
 module.exports = composeReducers(
   combineReducers({
