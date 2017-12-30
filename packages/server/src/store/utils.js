@@ -1,4 +1,4 @@
-const { reverse } = require('ramda');
+const { map, reverse } = require('ramda');
 
 const pipeReducers = (reducer, ...restReducers) => (state, action) => {
   if (typeof reducer !== 'function') {
@@ -27,8 +27,13 @@ const pipeMiddlewares = (...middlewares) => {
   return pipeMiddlewares(simpleComposeMiddlewares(m2, m1), ...rest);
 };
 
+const bindSelectors = (selectors, getState) => (
+  map(selector => (...args) => selector(getState(), ...args), selectors)
+)
+
 module.exports = {
   pipeMiddlewares,
   pipeReducers,
   composeReducers,
+  bindSelectors,
 }
