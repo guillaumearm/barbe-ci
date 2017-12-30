@@ -28,42 +28,38 @@ const writeDb = async (dbPath, db) => {
   return await writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
 }
 
-module.exports = ({ getState }) => next => action => {
+module.exports = ({ getState }) => next => async action => {
   if (action.type === 'LOAD_DB') {
     const dbPath = getDbPath(getState());
-    (async () => {
-      try {
-        const db = await readDb(dbPath)
-        next(assocPath(['payload', 'db'], db, action))
-      } catch (e) {
-        if (e.name === 'SyntaxError') {
-          return log('ERROR DB corrupted.');
-        }
-        log('DB missing.');
-        log('Creating fresh DB...');
-        const db = getDb(getState());
-        await writeDb(dbPath, db)
-        try {
-          log('DB created.');
-        } catch (e) {
-          log(e.message)
-        }
+    try {
+      const db = await readDb(dbPath)
+      return await next(assocPath(['payload', 'db'], db, action))
+    } catch (e) {
+      if (e.name === 'SyntaxError') {
+        return log('ERROR DB corrupted.');
       }
-    })()
-    return action;
-  }
-  const previousDb = getDb(getState());
-  const nextAction = next(action)
-  const currentDb = getDb(getState());
-  if (previousDb !== currentDb) {
-    (async () => {
+      log('DB missing.');
+      log('Creating fresh DB...');
+      const db = getDb(getState());
+      await writeDb(dbPath, db)
       try {
-        const dbPath = getDbPath(getState());
-        await writeDb(dbPath, currentDb);
+        log('DB created.');
       } catch (e) {
         log(e.message)
       }
-    })()
+    }
+    return await next(action);
   }
-  return nextAction;
+  const previousDb = getDb(getState());
+  const nexted = await next(action)
+  const currentDb = getDb(getState());
+  if (previousDb !== currentDb) {
+    try {
+      const dbPath = getDbPath(getState());
+      await writeDb(dbPath, currentDb);
+    } catch (e) {
+      log(e.message)
+    }
+  }
+  return nexted;
 }

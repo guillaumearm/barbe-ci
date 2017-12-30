@@ -1,10 +1,10 @@
 const { assocPath } = require('ramda')
 const { getIsDebug } = require('../../selectors');
 
-module.exports = ({ getState }) => next => action => {
+module.exports = ({ getState }) => next => async action => {
   const isDebug = getIsDebug(getState());
   if (action.type === 'LOAD_DB') {
-    return next(action);
+    return await next(action);
   }
-  return next(assocPath(['meta', 'debug'], isDebug, action));
+  return await next(assocPath(['meta', 'debug'], isDebug, action));
 }
