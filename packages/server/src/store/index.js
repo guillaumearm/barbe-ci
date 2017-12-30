@@ -1,6 +1,6 @@
 const { compose } = require('ramda');
 const { createStore } = require('redux');
-const rootReducer = require('./reducer');
+const rootReducer = require('./modules/reducer');
 
 module.exports = (initialState) => (
   createStore(
@@ -8,9 +8,9 @@ module.exports = (initialState) => (
     initialState,
     compose(
       require('./enhancer')(
-        require('./actions'),
-        require('./selectors'),
-        require('./middlewares'),
+        require('./modules/actions'),
+        require('./modules/selectors'),
+        require('./modules/middlewares'),
       ),
     )
   )
