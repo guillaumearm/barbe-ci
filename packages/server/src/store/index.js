@@ -1,7 +1,12 @@
-const { compose } = require('ramda');
+const { map, compose } = require('ramda');
 const { createStore, bindActionCreators, applyMiddleware } = require('redux');
 const rootReducer = require('./reducer');
 const actions = require('./actions');
+const selectors = require('./selectors');
+
+const bindSelectors = (selectors, getState) => (
+  map(selector => (...args) => selector(getState(), ...args), selectors)
+)
 
 const middlewares = [
   require('./modules/db/middleware'),
@@ -13,6 +18,7 @@ const enhanceStore = createStore => (...args) => {
   return {
     ...store,
     ...bindActionCreators(actions, store.dispatch),
+    ...bindSelectors(selectors, store.getState),
   }
 }
 

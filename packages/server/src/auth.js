@@ -1,24 +1,21 @@
 const passport = require('koa-passport')
 const { v4 } = require('uuid');
 
-const { getClientId, getClientSecret, getUser } = require('./store/selectors');
-
 const registerAuth = (app) => {
   const store = app.context.store;
-  const { getState } = store;
   passport.serializeUser(function(user, done) {
     done(null, user.sessionUuid)
   })
 
   passport.deserializeUser(function(sessionUuid, done) {
-    const user = getUser(getState(), { sessionUuid });
+    const user = store.getUser({ sessionUuid })
     done(null, user || false);
   })
 
   const BitbucketStrategy = require('passport-bitbucket-oauth2').Strategy
   passport.use(new BitbucketStrategy({
-      clientID: getClientId(getState()),
-      clientSecret: getClientSecret(getState()),
+      clientID: store.getClientId(),
+      clientSecret: store.getClientSecret(),
     },
     function(accessToken, refreshToken, profile, done) {
       const user = { sessionUuid: v4(), accessToken, refreshToken, profile }
