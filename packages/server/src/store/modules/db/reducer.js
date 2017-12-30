@@ -1,6 +1,6 @@
 const { always, identity } = require('ramda');
 const { combineReducers } = require('redux')
-const { toReducer, composeReducers } = require('../../utils');
+const { toReducer, composeReducers } = require('redux-fun');
 
 const loadDbReducer = toReducer((action) => {
   if (action.type === 'LOAD_DB' && action.payload.db) {

@@ -1,5 +1,5 @@
 const { identity, assoc } = require('ramda');
-const { toReducer } = require('../../../utils')
+const { toReducer } = require('redux-fun')
 
 const initialState = {}
 

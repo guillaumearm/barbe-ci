@@ -1,6 +1,6 @@
 const { reverse, compose } = require('ramda');
 const { bindActionCreators } = require('redux');
-const { bindSelectors } = require('./utils');
+const { bindSelectors } = require('redux-fun');
 
 module.exports = (actions = {}, selectors = {}, middlewares = []) => {
   return createStore => (...args) => {
