@@ -28,6 +28,16 @@ const bbGetAll = (endpoint, options = {}) => ({
   payload: { request: { type: 'getAll', endpoint, options } },
 })
 
+const bbReloadBranches = (repositoryFullName, branches) => ({
+  type: 'BITBUCKET_RELOAD_BRANCHES',
+  payload: { repositoryFullName, branches },
+})
+
+const bbReloadRepositories = (repositories) => ({
+  type: 'BITBUCKET_RELOAD_REPOSITORIES',
+  payload: { repositories },
+})
+
 module.exports = {
   updateTokens,
   userLogin,
@@ -35,5 +45,7 @@ module.exports = {
   loadDb,
   bbGet,
   bbGetAll,
+  bbReloadBranches,
+  bbReloadRepositories,
   ...require('./repositories/actions'),
 }

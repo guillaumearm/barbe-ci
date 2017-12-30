@@ -21,11 +21,17 @@ const initialState = {
 }
 
 const store = createStore(initialState)
-store.loadDb();
-app.context.store = store;
 
-require('./auth')(app);
-getMiddlewares(app).forEach(middleware => app.use(middleware));
+const launchServer = async () => {
+  await store.loadDb();
+  await store.bbReloadRepositories(store.getRepositoriesNames());
+  app.context.store = store;
 
-app.listen(serverConfiguration.PORT)
-console.log(`Listening on ${serverConfiguration.PORT}.`);
+  require('./auth')(app);
+  getMiddlewares(app).forEach(middleware => app.use(middleware));
+
+  app.listen(serverConfiguration.PORT)
+  console.log(`Listening on ${serverConfiguration.PORT}.`);
+}
+
+launchServer();

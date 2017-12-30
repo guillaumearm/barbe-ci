@@ -1,5 +1,8 @@
 const _ = require('lodash/fp');
-const { map, prop, when, always, either, filter, reduce, concat, pipe, defaultTo, identity } = require('ramda');
+const {
+  map, prop, when, always, either, filter, merge,
+  reduce, concat, pipe, defaultTo, identity, __,
+} = require('ramda');
 
 const branchUpdater = (action) => {
   if (action.type === 'GIT_PUSH/createChange') {
@@ -33,11 +36,23 @@ const getBranchesChanges = _.pipe(
 )
 
 module.exports = (action) => (state = {}) => {
-  return reduce((state, change) => {
-    if (change.closed) {
-      return _.unset(change.old.name, state)
-    }
+  if (action.type === 'GIT_PUSH') {
+    return reduce((state, change) => {
+      if (change.closed) {
+        return _.unset(change.old.name, state)
+      }
 
-    return _.update(change.new.name, branchUpdater(createChange(change)), state);
-  }, state, getBranchesChanges(action.payload));
+      return _.update(change.new.name, branchUpdater(createChange(change)), state);
+    }, state, getBranchesChanges(action.payload));
+  }
+  if (action.type === 'BITBUCKET_RELOAD_BRANCHES') {
+    return reduce((state, branch) => (
+      _.update(
+        branch.name,
+        merge(__, { commits: branch.commits.map(prop('hash')) }),
+        state,
+      )
+    ), state, action.payload.resolvedBranches)
+  }
+  return state;
 }

@@ -34,11 +34,15 @@ const get = async (store, endpoint, options = {}) => {
   try {
     return (await makeQuery()).data
   } catch (e) {
-    if (e.response.status === 401) {
+    const message = _.get('response.data.error.message', e) || _.get('response.statusText', e);
+    if (e.response.status === 401 && /^Access token expired/.test(message)) {
+      console.log('Access token expired, refresh token.');
       const refreshResult = await makeRefresh();
       const { access_token, refresh_token } = JSON.parse(refreshResult.body)
       store.updateTokens(access_token, refresh_token)
       return (await makeQuery()).data
+    } else if (message) {
+      throw new Error(message);
     } else {
       throw e;
     }
@@ -49,7 +53,7 @@ const getAll = async (store, endpoint, options) => {
   let response = await get(store, endpoint, options);
   const responses = [response];
   while (response.next) {
-    console.log('[getAll] - Additional request');
+    console.log('[bitbucket getAll] - Additional request');
     response = await get(store, response.next, options);
     responses.push(response);
   }
