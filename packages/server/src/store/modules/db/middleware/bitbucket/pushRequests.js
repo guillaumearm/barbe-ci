@@ -1,4 +1,5 @@
 const _ = require('lodash/fp');
+const { applyTo, pipe } = require('ramda');
 const { pipeMiddlewares } = require('redux-fun');
 
 const orderer = (store) => (next) => {
@@ -30,7 +31,11 @@ const commitsLoader = (store) => (next) => async (action) => {
       if (change.truncated) {
         const result = await store.bbGetAll(change.links.commits.href);
         const commits = result.payload.response;
-        newChanges.push(_.set('commits', commits, change))
+        const newChange = applyTo(change)(pipe(
+          _.set('commits', commits),
+          _.set('truncated', false),
+        ))
+        newChanges.push(newChange)
       } else {
         newChanges.push(change)
       }
