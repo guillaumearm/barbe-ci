@@ -1,6 +1,29 @@
 const _ = require('lodash/fp');
+const { pipeMiddlewares } = require('redux-fun');
 
-module.exports = (store) => (next) => async (action) => {
+const orderer = (store) => (next) => {
+  let pushing = false;
+  const actionsQueue = [];
+  return async (action) => {
+    if (action.type === 'GIT_PUSH') {
+      if (pushing) {
+        actionsQueue.push(action);
+      } else {
+        pushing = true;
+        const nexted = await next(action);
+        pushing = false;
+        const nextAction = actionsQueue.shift()
+        if (nextAction) {
+          store.dispatch(nextAction);
+        }
+        return nexted
+      }
+    }
+    return await next(action);
+  }
+}
+
+const commitsLoader = (store) => (next) => async (action) => {
   if (action.type === 'GIT_PUSH') {
     const newChanges = [];
     for (let change of action.payload.push.changes) {
@@ -16,3 +39,8 @@ module.exports = (store) => (next) => async (action) => {
   }
   return await next(action);
 }
+
+module.exports = pipeMiddlewares(
+  orderer,
+  commitsLoader,
+)
