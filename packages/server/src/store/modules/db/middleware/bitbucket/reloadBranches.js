@@ -13,7 +13,7 @@ module.exports = (store) => (next) => async (action) => {
         const result = await requests.get(store, `${endpointPrefix}/refs/branches/${branch}`)
         const lastCommit = result.target.hash;
         if (lastCommit === store.getLastCommit({ repository: repositoryFullName, branch })) {
-          console.log(`'${branch}' is already up-to-date.`);
+          console.log(`'${repositoryFullName}#${branch}' is already up-to-date.`);
         } else {
           console.log(`Resolve '${branch}' commits on ${repositoryFullName}`);
           const commits = await requests.getAll(store, endpoint);
