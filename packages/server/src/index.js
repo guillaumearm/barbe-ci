@@ -23,15 +23,18 @@ const initialState = {
 const store = createStore(initialState)
 
 const launchServer = async () => {
-  await store.loadDb();
-  await store.bbReloadRepositories(store.getRepositoriesNames());
   app.context.store = store;
+  await store.loadDb();
 
   require('./auth')(app);
   getMiddlewares(app).forEach(middleware => app.use(middleware));
 
-  app.listen(serverConfiguration.PORT)
-  console.log(`Listening on ${serverConfiguration.PORT}.`);
+  app.listen(serverConfiguration.PORT, async () => {
+    console.log(`Listening on ${serverConfiguration.PORT}.`);
+    await store.bbReloadRepositories(store.getRepositoriesNames());
+  })
+
+
 }
 
 launchServer();
