@@ -7,12 +7,18 @@ module.exports = (store) => (next) => async (action) => {
     const { repositoryFullName, branches } = action.payload;
     const resolvedBranches = [];
     for (let branch of branches) {
-      const endpoint = `https://api.bitbucket.org/2.0/repositories/${repositoryFullName}/commits/${branch}`;
+      const endpointPrefix = `https://api.bitbucket.org/2.0/repositories/${repositoryFullName}`
+      const endpoint = `${endpointPrefix}/commits/${branch}`;
       try {
-        console.log(`Resolve '${branch}' commits on ${repositoryFullName}`);
-        const commits = await requests.getAll(store, endpoint);
-        console.log('Resolved.');
-        resolvedBranches.push({ name: branch, commits });
+        const result = await requests.get(store, `${endpointPrefix}/refs/branches/${branch}`)
+        const lastCommit = result.target.hash;
+        if (lastCommit === store.getLastCommit({ repository: repositoryFullName, branch })) {
+          console.log(`'${branch}' is already up-to-date.`);
+        } else {
+          console.log(`Resolve '${branch}' commits on ${repositoryFullName}`);
+          const commits = await requests.getAll(store, endpoint);
+          resolvedBranches.push({ name: branch, commits });
+        }
       } catch (e) {
         console.log(`${e.message} (${endpoint})`);
       }
