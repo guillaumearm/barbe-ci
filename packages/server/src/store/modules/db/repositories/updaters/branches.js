@@ -1,20 +1,21 @@
 const _ = require('lodash/fp');
 const {
-  map, prop, when, always, either, filter, merge,
-  reduce, concat, pipe, defaultTo, identity, __,
+  __, identity, always, when, prop, pipe,
+  map, merge, reduce, concat, defaultTo,
 } = require('ramda');
 
 const branchUpdater = (action) => {
-  if (action.type === 'GIT_PUSH/createChange') {
+  if (action.type === 'GIT_PUSH') {
+    const { change } = action.payload.push;
     return _.pipe(
-      _.set('name', action.payload.new.name),
-      when(always(action.payload.forced))(
+      _.set('name', change.name),
+      when(always(change.forced))(
         _.set('commits', [])
       ),
       _.update('commits', pipe(
         defaultTo([]),
         concat(
-          map(prop('hash'))(action.payload.commits)
+          map(prop('hash'))(change.commits)
         )
       ))
     );
@@ -22,28 +23,15 @@ const branchUpdater = (action) => {
   return identity;
 }
 
-const createChange = (change) => ({
-  type: 'GIT_PUSH/createChange',
-  payload: change,
-})
-
-const getBranchesChanges = _.pipe(
-  _.get('push.changes'),
-  filter(either(
-    _.propEq('new.type', 'branch'),
-    _.propEq('old.type', 'branch'),
-  ))
-)
-
 module.exports = (action) => (state = {}) => {
   if (action.type === 'GIT_PUSH') {
-    return reduce((state, change) => {
+    const { change } = action.payload.push;
+    if (change.type === 'branch') {
       if (change.closed) {
-        return _.unset(change.old.name, state)
+        return _.unset(change.name, state);
       }
-
-      return _.update(change.new.name, branchUpdater(createChange(change)), state);
-    }, state, getBranchesChanges(action.payload));
+      return _.update(change.name, branchUpdater(action), state);
+    }
   }
   if (action.type === 'BITBUCKET_RELOAD_BRANCHES') {
     return reduce((state, branch) => (
