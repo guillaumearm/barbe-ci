@@ -34,8 +34,10 @@ const get = async (store, endpoint, options = {}) => {
   try {
     return (await makeQuery()).data
   } catch (e) {
-    const message = _.get('response.data.error.message', e) || _.get('response.statusText', e);
-    if (e.response.status === 401 && /^Access token expired/.test(message)) {
+    const message = _.get('response.data.error.message', e) || _.get('message', e);
+    const status = _.get('response.status', e);
+    // console.log(e.message);
+    if (status === 401 && /^Access token expired/.test(message)) {
       console.log('Access token expired, refresh token.');
       const refreshResult = await makeRefresh();
       const { access_token, refresh_token } = JSON.parse(refreshResult.body)
