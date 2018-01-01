@@ -4,6 +4,18 @@ const {
   map, merge, reduce, concat, defaultTo, equals, identity,
 } = require('ramda');
 
+const commitNotFound = commit => compose(
+  not,
+  find(equals(commit)),
+  prop('commits'),
+)
+
+const updateCommits = commits => _.update('commits', (
+  concat(
+    map(prop('hash'))(commits)
+  )
+))
+
 const branchUpdater = (action) => {
   if (action.type === 'GIT_PUSH') {
     const { change } = action.payload.push;
@@ -13,16 +25,8 @@ const branchUpdater = (action) => {
       when(always(change.forced))(
         _.set('commits', [])
       ),
-      when(compose(
-        not,
-        find(equals(change.new.target.hash)),
-        prop('commits'),
-      ))(
-        _.update('commits', (
-          concat(
-            map(prop('hash'))(change.commits)
-          )
-        ))
+      when(commitNotFound(change.new.target.hash))(
+        updateCommits(change.commits)
       ),
     );
   }
