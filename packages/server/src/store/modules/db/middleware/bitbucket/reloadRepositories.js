@@ -14,9 +14,9 @@ module.exports = (store) => (next) => async (action) => {
         }
         return await next(action)
       }
-      const branchNames = store.getBranchesNames({ repository })
-      if (branchNames.length > 0) {
-        await store.reloadBranches(repository, branchNames)
+      const branchesNames = store.getBranchesNames({ repositoryFullName: repository })
+      if (branchesNames.length > 0) {
+        await store.reloadBranches(repository, branchesNames)
       }
     }
     return await next(action);

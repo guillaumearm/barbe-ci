@@ -5,7 +5,7 @@ const { createSelector } = require('reselect');
 const getRepositories = pathOr({}, ['db', 'repositories']);
 
 const getRepository = createSelector(
-  (state, { repository }) => repository,
+  (state, { repositoryFullName }) => repositoryFullName,
   getRepositories,
   _.get
 )
@@ -33,8 +33,8 @@ const getBranchesNames = createSelector(
 
 const getBranch = createSelector(
   getRepository,
-  (state, { branch }) => branch,
-  (repository, branch) => path(['branches', branch], repository)
+  (state, { branchName }) => branchName,
+  (repository, branchName) => path(['branches', branchName], repository)
 )
 
 const getCommits = createSelector(
