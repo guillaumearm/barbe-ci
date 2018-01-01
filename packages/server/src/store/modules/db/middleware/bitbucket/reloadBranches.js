@@ -20,7 +20,7 @@ module.exports = (store) => (next) => async (action) => {
           resolvedBranches.push({ name: branch, commits });
         }
       } catch (e) {
-        console.log(`${e.message} (${endpoint})`);
+        console.log(`${e} (${endpoint})`);
       }
     }
     return await next(assocPath(['payload', 'resolvedBranches'], resolvedBranches, action));
