@@ -1,26 +1,30 @@
 const _ = require('lodash/fp');
 const {
-  __, identity, always, when, prop, pipe,
+  __, applyTo, always, when, prop, pipe,
   map, merge, reduce, concat, defaultTo,
 } = require('ramda');
 
-const branchUpdater = (action) => {
+const branchUpdater = (action) => (state) => {
   if (action.type === 'GIT_PUSH') {
     const { change } = action.payload.push;
-    return _.pipe(
+    return applyTo(state)(_.pipe(
       _.set('name', change.name),
       when(always(change.forced))(
         _.set('commits', [])
       ),
-      _.update('commits', pipe(
-        defaultTo([]),
-        concat(
-          map(prop('hash'))(change.commits)
-        )
-      ))
-    );
+      when(
+        always(change.new.target.hash !== _.get('commits[0]', state))
+      )(
+        _.update('commits', pipe(
+          defaultTo([]),
+          concat(
+            map(prop('hash'))(change.commits)
+          )
+        ))
+      ),
+    ));
   }
-  return identity;
+  return state;
 }
 
 module.exports = (action) => (state = {}) => {
