@@ -51,7 +51,7 @@ const get = async (store, endpoint, options = {}) => {
   }
 }
 
-const getAll = async (store, endpoint, options) => {
+const getAll = async (store, endpoint, options = {}) => {
   let response = await get(store, endpoint, options);
   const responses = [response];
   while (response.next) {
