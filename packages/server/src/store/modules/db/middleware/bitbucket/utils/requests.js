@@ -43,6 +43,8 @@ const get = async (store, endpoint, options = {}) => {
       const { access_token, refresh_token } = JSON.parse(refreshResult.body)
       store.updateTokens(access_token, refresh_token)
       return (await makeQuery()).data
+    } else if (status === 404) {
+      throw new Error('404 not found')
     } else if (message) {
       throw new Error(message);
     } else {
