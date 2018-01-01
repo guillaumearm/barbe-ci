@@ -38,6 +38,16 @@ const bbReloadRepositories = (repositories) => ({
   payload: { repositories },
 })
 
+const branchNotFound = (repositoryFullName, branchName) => ({
+  type: 'BRANCH_NOT_FOUND',
+  payload: { repositoryFullName, branchName },
+})
+
+const repositoryNotFound = (repositoryFullName) => ({
+  type: 'REPOSITORY_NOT_FOUND',
+  payload: { repositoryFullName },
+})
+
 module.exports = {
   updateTokens,
   userLogin,
@@ -47,5 +57,7 @@ module.exports = {
   bbGetAll,
   bbReloadBranches,
   bbReloadRepositories,
+  branchNotFound,
+  repositoryNotFound,
   ...require('./repositories/actions'),
 }

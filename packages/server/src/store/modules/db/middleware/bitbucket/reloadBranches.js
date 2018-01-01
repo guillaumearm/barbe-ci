@@ -20,7 +20,12 @@ module.exports = (store) => (next) => async (action) => {
           resolvedBranches.push({ name: branch, commits });
         }
       } catch (e) {
-        console.log(`${e} (${endpoint})`);
+        if (e.message === '404 not found') {
+          store.branchNotFound(repositoryFullName, branch);
+          console.log(`'${repositoryFullName}#${branch}' not found, remove branch.`);
+        } else {
+          console.log(`${e} (${endpoint})`);
+        }
       }
     }
     return await next(assocPath(['payload', 'resolvedBranches'], resolvedBranches, action));

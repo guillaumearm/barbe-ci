@@ -34,6 +34,9 @@ const branchUpdater = (action) => {
 }
 
 module.exports = (action) => (state = {}) => {
+  if (action.type === 'BRANCH_NOT_FOUND') {
+    return _.unset(action.payload.branchName, state);
+  }
   if (action.type === 'GIT_PUSH') {
     const { change } = action.payload.push;
     if (change.type === 'branch') {
