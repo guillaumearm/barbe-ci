@@ -31,7 +31,7 @@ const launchServer = async () => {
 
   app.listen(serverConfiguration.PORT, async () => {
     console.log(`Listening on ${serverConfiguration.PORT}.`);
-    await store.bbReloadRepositories(store.getRepositoriesNames());
+    await store.reloadRepositories(store.getRepositoriesNames());
     console.log('Repositories - Reloaded.');
   })
 }

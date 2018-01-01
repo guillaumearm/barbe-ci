@@ -46,7 +46,7 @@ module.exports = (action) => (state = {}) => {
       return _.update(change.name, branchUpdater(action), state);
     }
   }
-  if (action.type === 'BITBUCKET_RELOAD_BRANCHES') {
+  if (action.type === 'RELOAD_BRANCHES') {
     return reduce((state, branch) => (
       _.update(
         branch.name,

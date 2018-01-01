@@ -3,7 +3,7 @@ const { assocPath } = require('ramda');
 const requests = require('./utils/requests');
 
 module.exports = (store) => (next) => async (action) => {
-  if (action.type === 'BITBUCKET_RELOAD_BRANCHES') {
+  if (action.type === 'RELOAD_BRANCHES') {
     const { repositoryFullName, branches } = action.payload;
     const resolvedBranches = [];
     for (let branch of branches) {
