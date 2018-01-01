@@ -1,51 +1,6 @@
-const lodash = require('lodash');
 const _ = require('lodash/fp');
 const { applyTo, pipe } = require('ramda');
-const { pipeMiddlewares } = require('redux-fun');
-
-const scheduler = () => (next) => {
-  const queues = {};
-  return async (action) => {
-    if (action.type === 'GIT_PUSH') {
-      const { repository, push } = action.payload;
-      const branchPath = [repository.full_name, 'branches', push.change.name];
-      const pushingPath = [...branchPath, 'pushing'];
-      const actionsQueuePath = [...branchPath, 'actionsQueue']
-
-      const getPushing = () => _.get(pushingPath, queues)
-      const setPushing = (v) => lodash.set(queues, pushingPath, v);
-      const pushActionsQueue = (x) => {
-        lodash.update(queues, actionsQueuePath, _.pipe(
-          _.defaultTo([]),
-          _.concat(_, x))
-        )
-      }
-      const popActionQueue = () => {
-        const firstAction = _.get([...actionsQueuePath, 0], queues)
-        lodash.update(queues, actionsQueuePath, _.drop(1))
-        return firstAction;
-      }
-
-      if (getPushing()) {
-        await new Promise(resolve => {
-          pushActionsQueue({ resume: () => resolve() })
-        })
-        return await next(action);
-      }
-      setPushing(true)
-      const nexted = await next(action);
-      setPushing(false)
-      const nextAction = popActionQueue();
-      if (nextAction) {
-        nextAction.resume();
-      } else {
-        lodash.unset(queues, branchPath);
-      }
-      return nexted
-    }
-    return await next(action);
-  }
-}
+const { pipeMiddlewares, preserveAsyncFlow } = require('redux-fun');
 
 const commitsLoader = (store) => (next) => async (action) => {
   if (action.type === 'GIT_PUSH') {
@@ -65,6 +20,7 @@ const commitsLoader = (store) => (next) => async (action) => {
 }
 
 module.exports = pipeMiddlewares(
-  scheduler,
+  preserveAsyncFlow('GIT_PUSH'),
+  preserveAsyncFlow('RELOAD_BRANCH'),
   commitsLoader,
 )
