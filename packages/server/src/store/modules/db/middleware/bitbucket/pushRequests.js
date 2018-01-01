@@ -26,7 +26,6 @@ const orderer = (store) => (next) => {
 
 const commitsLoader = (store) => (next) => async (action) => {
   if (action.type === 'GIT_PUSH') {
-    const newChanges = [];
     const change = action.payload.push.change;
     if (change.truncated) {
       const result = await store.bbGetAll(change.links.commits.href);
@@ -35,11 +34,9 @@ const commitsLoader = (store) => (next) => async (action) => {
         _.set('commits', commits),
         _.set('truncated', false),
       ))
-      newChanges.push(newChange)
-    } else {
-      newChanges.push(change)
+      return await next(_.set('payload.push.change', newChange, action));
     }
-    return await next(_.set('payload.push.changes', newChanges, action));
+    return await next(action);
   }
   return await next(action);
 }
