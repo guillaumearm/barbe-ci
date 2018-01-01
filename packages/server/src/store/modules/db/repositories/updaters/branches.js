@@ -9,6 +9,7 @@ const branchUpdater = (action) => {
     const { change } = action.payload.push;
     return pipe(
       _.set('name', change.name),
+      _.update('commits', defaultTo([])),
       when(always(change.forced))(
         _.set('commits', [])
       ),
@@ -17,8 +18,7 @@ const branchUpdater = (action) => {
         find(equals(change.new.target.hash)),
         prop('commits'),
       ))(
-        _.update('commits', pipe(
-          defaultTo([]),
+        _.update('commits', (
           concat(
             map(prop('hash'))(change.commits)
           )
