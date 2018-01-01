@@ -2,23 +2,25 @@ const _ = require('lodash/fp');
 const { applyTo, pipe } = require('ramda');
 const { pipeMiddlewares } = require('redux-fun');
 
-const orderer = (store) => (next) => {
+const orderer = () => (next) => {
   let pushing = false;
   const actionsQueue = [];
   return async (action) => {
     if (action.type === 'GIT_PUSH') {
       if (pushing) {
-        actionsQueue.push(action);
-      } else {
-        pushing = true;
-        const nexted = await next(action);
-        pushing = false;
-        const nextAction = actionsQueue.shift()
-        if (nextAction) {
-          store.dispatch(nextAction);
-        }
-        return nexted
+        await new Promise(resolve => {
+          actionsQueue.push({ resume: () => resolve() })
+        })
+        return await next(action);
       }
+      pushing = true;
+      const nexted = await next(action);
+      pushing = false;
+      const nextAction = actionsQueue.shift()
+      if (nextAction) {
+        nextAction.resume();
+      }
+      return nexted
     }
     return await next(action);
   }
