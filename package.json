@@ -1,6 +1,6 @@
 {
   "name": "sdp",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "Systeme De Pointage",
   "scripts": {
     "clean": "rimraf e2e/dist && cd packages/client && npm run clean",
