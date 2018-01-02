@@ -11,8 +11,8 @@ module.exports = (router) => {
         applyTo(body)(pipe(
           _.unset('push.changes'),
           _.set('push.change', change),
-          _.set('push.change.type', _.get('type')(change.new || change.old)),
-          _.set('push.change.name', _.get('name')(change.new || change.old)),
+          _.set('push.change.branchType', _.get('type')(change.new || change.old)),
+          _.set('push.change.branchName', _.get('name')(change.new || change.old)),
         ))
       ));
       changes.forEach(change => ctx.store.gitPush(change))

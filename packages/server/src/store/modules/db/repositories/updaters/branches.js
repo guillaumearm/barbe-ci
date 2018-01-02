@@ -23,7 +23,7 @@ const branchUpdater = (action) => {
   if (action.type === 'GIT_PUSH') {
     const { change } = action.payload.push;
     return pipe(
-      _.set('name', change.name),
+      _.set('name', change.branchName),
       _.update('commits', defaultTo([])),
       when(always(change.forced))(
         _.set('commits', [])
@@ -46,11 +46,11 @@ const branchUpdater = (action) => {
 module.exports = withDefaultState({}, (action) => {
   if (action.type === 'GIT_PUSH') {
     const { change } = action.payload.push;
-    if (change.type === 'branch') {
+    if (change.branchType === 'branch') {
       if (change.closed) {
-        return _.unset(change.name);
+        return _.unset(change.branchName);
       }
-      return _.update(change.name, branchUpdater(action));
+      return _.update(change.branchName, branchUpdater(action));
     }
   }
   if (action.type === 'RELOAD_BRANCH') {
