@@ -17,12 +17,18 @@ module.exports = (store) => (next) => async (action) => {
     const endpoint = `${endpointPrefix}/commits/${branchName}`;
     try {
       const result = await requests.get(store, `${endpointPrefix}/refs/branches/${branchName}`)
-      const lastCommit = result.target.hash;
-      if (lastCommit === store.getLastCommit({ repositoryFullName, branchName })) {
+      const lastCommit = store.getLastCommit({ repositoryFullName, branchName });
+      if (result.target.hash === lastCommit) {
         console.log(`'${repositoryFullName}#${branchName}' is already up-to-date.`);
       } else {
         console.log(`Resolve '${branchName}' commits on ${repositoryFullName}`);
-        const commits = await requests.getAll(store, endpoint);
+        const options = {
+          params: {
+            exclude: lastCommit,
+            include: _.get('payload.push.change.old.target.hash', action)
+          },
+        };
+        const commits = await requests.getAll(store, endpoint, options);
         const getIsForced = both(
           _.has('[0]'),
           compose(not, _.has('parents[0]'), last)
