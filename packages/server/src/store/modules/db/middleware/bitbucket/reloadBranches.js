@@ -22,12 +22,13 @@ module.exports = (store) => (next) => async (action) => {
         console.log(`'${repositoryFullName}#${branchName}' is already up-to-date.`);
       } else {
         console.log(`Resolve '${branchName}' commits on ${repositoryFullName}`);
+        const commitToResolve = _.get('payload.relatedPush.change.old.target.hash', action);
         const options = {
           params: {
             exclude: lastCommit,
-            include: _.get('payload.push.change.old.target.hash', action)
           },
         };
+        const endpoint = `${endpointPrefix}/commits/${commitToResolve || branchName}`;
         const commits = await requests.getAll(store, endpoint, options);
         const getIsForced = both(
           _.has('[0]'),

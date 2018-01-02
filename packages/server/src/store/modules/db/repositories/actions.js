@@ -5,9 +5,9 @@ const repositoryNotFound = (repositoryFullName) => ({
   payload: { repositoryFullName },
 })
 
-const reloadBranch = (repositoryFullName, branchName) => ({
+const reloadBranch = (repositoryFullName, branchName, push) => ({
   type: 'RELOAD_BRANCH',
-  payload: { repositoryFullName, branchName },
+  payload: { repositoryFullName, branchName, relatedPush: push },
 })
 
 const reloadBranches = (repositoryFullName, branchesNames) => ({
