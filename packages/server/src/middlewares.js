@@ -2,8 +2,6 @@ const { reject, isNil } = require('ramda');
 const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 
-const routes = require('./routes');
-
 module.exports = (app) => {
   const store = app.context.store
   const { VERBOSE } = store.getServerConfiguration();
@@ -14,6 +12,6 @@ module.exports = (app) => {
     }),
     passport.initialize(),
     passport.session(),
-    routes,
+    app.router.routes(),
   ])
 }
