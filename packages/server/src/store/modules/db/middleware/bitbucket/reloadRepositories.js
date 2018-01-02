@@ -5,6 +5,10 @@ module.exports = (store) => (next) => async (action) => {
     for (let repository of action.payload.repositories) {
       try {
         await store.bbGet(`https://api.bitbucket.org/2.0/repositories/${repository}`);
+        const branchesNames = store.getBranchesNames({ repositoryFullName: repository })
+        if (branchesNames.length > 0) {
+          await store.reloadBranches(repository, branchesNames)
+        }
       } catch (e) {
         if (e.message === '404 not found') {
           store.repositoryNotFound(repository);
@@ -12,11 +16,6 @@ module.exports = (store) => (next) => async (action) => {
         } else {
           console.log(e);
         }
-        return await next(action)
-      }
-      const branchesNames = store.getBranchesNames({ repositoryFullName: repository })
-      if (branchesNames.length > 0) {
-        await store.reloadBranches(repository, branchesNames)
       }
     }
     return await next(action);
