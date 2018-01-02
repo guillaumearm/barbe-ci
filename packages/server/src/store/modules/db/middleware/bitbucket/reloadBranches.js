@@ -34,14 +34,13 @@ module.exports = (store) => (next) => async (action) => {
       }
     } catch (e) {
       if (e.message === '404 not found') {
-        store.branchNotFound(repositoryFullName, branchName);
         console.log(`'${repositoryFullName}#${branchName}' not found, remove branch.`);
         return await next(assocPath(['payload', 'notFound'], true, action));
       } else {
         console.log(`${e} (${endpoint})`);
       }
     }
-    return null;
+    return await next(action);
   }
   return await next(action);
 }

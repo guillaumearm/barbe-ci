@@ -17,9 +17,6 @@ module.exports = toReducer((action) => {
   if (action.type === 'REPOSITORY_NOT_FOUND') {
     return _.unset(action.payload.repositoryFullName);
   }
-  if (action.type === 'BRANCH_NOT_FOUND') {
-    return _.update(action.payload.repositoryFullName, repoUpdater(action));
-  }
   if (action.type === 'GIT_PUSH') {
     return _.update(action.payload.repository.full_name, repoUpdater(action));
   }

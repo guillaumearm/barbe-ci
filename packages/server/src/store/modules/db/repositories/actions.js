@@ -1,10 +1,5 @@
 const gitPush = (payload) => ({ type: 'GIT_PUSH', payload });
 
-const branchNotFound = (repositoryFullName, branchName) => ({
-  type: 'BRANCH_NOT_FOUND',
-  payload: { repositoryFullName, branchName },
-})
-
 const repositoryNotFound = (repositoryFullName) => ({
   type: 'REPOSITORY_NOT_FOUND',
   payload: { repositoryFullName },
@@ -28,7 +23,6 @@ const reloadRepositories = (repositories) => ({
 
 module.exports = {
   gitPush,
-  branchNotFound,
   repositoryNotFound,
   reloadBranch,
   reloadBranches,
