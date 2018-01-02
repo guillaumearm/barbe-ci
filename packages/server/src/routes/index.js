@@ -1,2 +1,1 @@
-const router = require('./router');
-module.exports = router.routes();
+module.exports = require('./router');

@@ -1,6 +1,4 @@
-const { pipeMiddlewares } = require('redux-fun');
-
-module.exports = pipeMiddlewares(
+module.exports = require('redux-fun').pipeMiddlewares(
   require('./bitbucket'),
   require('./persist'),
 )

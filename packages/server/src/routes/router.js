@@ -6,7 +6,8 @@ const routes = [
   require('./debug'),
 ];
 
-const router = createRouter();
-routes.forEach(route => route(router))
-
-module.exports = router;
+module.exports = (store) => {
+  const router = createRouter();
+  routes.forEach(route => route(router, store))
+  return router;
+};

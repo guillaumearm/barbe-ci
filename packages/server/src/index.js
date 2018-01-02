@@ -7,6 +7,7 @@ const session = require('koa-session');
 const serverConfiguration = require('./configuration');
 const getMiddlewares = require('./middlewares');
 const createStore = require('./store');
+const createRouter = require('./routes');
 
 const app = new Koa();
 app.keys = ['simpleci']
@@ -20,12 +21,23 @@ const initialState = {
   }
 }
 
-const store = createStore(initialState)
-store.loadDb();
-app.context.store = store;
 
-require('./auth')(app);
-getMiddlewares(app).forEach(middleware => app.use(middleware));
+const launchServer = async () => {
+  const store = createStore(initialState)
+  const router = createRouter(store);
+  app.context.store = store;
+  app.router = router;
 
-app.listen(serverConfiguration.PORT)
-console.log(`Listening on ${serverConfiguration.PORT}.`);
+  await store.loadDb();
+
+  require('./auth')(app);
+  getMiddlewares(app).forEach(middleware => app.use(middleware));
+
+  app.listen(serverConfiguration.PORT, async () => {
+    console.log(`Listening on ${serverConfiguration.PORT}.`);
+    await store.reloadRepositories(store.getRepositoriesNames());
+    console.log('Repositories - Reloaded.');
+  })
+}
+
+launchServer();

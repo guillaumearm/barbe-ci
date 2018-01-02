@@ -67,7 +67,7 @@
     "passport-bitbucket-oauth2": "^0.1.2",
     "ramda": "^0.25.0",
     "redux": "^3.7.2",
-    "redux-fun": "^0.1.1",
+    "redux-fun": "^1.0.1",
     "request": "^2.83.0",
     "reselect": "^3.0.1",
     "uuid": "^3.1.0",

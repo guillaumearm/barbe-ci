@@ -20,7 +20,12 @@ const loadDb = () => ({
 
 const bbGet = (endpoint, options = {}) => ({
   type: 'BITBUCKET_GET',
-  payload: { request: { endpoint, options } },
+  payload: { request: { type: 'get', endpoint, options } },
+})
+
+const bbGetAll = (endpoint, options = {}) => ({
+  type: 'BITBUCKET_GET',
+  payload: { request: { type: 'getAll', endpoint, options } },
 })
 
 module.exports = {
@@ -29,5 +34,6 @@ module.exports = {
   userLogout,
   loadDb,
   bbGet,
+  bbGetAll,
   ...require('./repositories/actions'),
 }
