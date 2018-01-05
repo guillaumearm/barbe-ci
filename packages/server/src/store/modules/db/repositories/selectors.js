@@ -47,6 +47,18 @@ const getBranchLastCommit = createSelector(
   prop(0),
 )
 
+const getAllBranchesCommits = createSelector(
+  getRepositories,
+  _.flatMap(
+    _.pipe(
+      _.get('branches'),
+      _.flatMap(_.pipe(
+        _.get('commits'),
+      )),
+    )
+  )
+)
+
 module.exports = {
   getRepositories,
   getRepository,
@@ -56,4 +68,5 @@ module.exports = {
   getBranches,
   getBranchesNames,
   getRepositoriesNames,
+  getAllBranchesCommits,
 }
