@@ -11,7 +11,7 @@ const get = async (store, endpoint, options = {}) => {
     {
       form: {
         grant_type: 'refresh_token',
-        refresh_token: store.getCiRefreshToken(),
+        refresh_token: store.getRefreshToken(),
       },
       auth: {
         username: store.getClientId(),
@@ -23,7 +23,7 @@ const get = async (store, endpoint, options = {}) => {
     endpoint,
     mergeDeepLeft(options, {
       params: {
-        access_token: store.getCiAccessToken(),
+        access_token: store.getAccessToken(),
       },
       auth: {
         username: store.getClientId(),

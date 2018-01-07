@@ -1,7 +1,7 @@
 const { createSelector } = require('reselect');
 const { propOr, difference } = require('ramda');
 
-const ci = require('./ci/selectors');
+const tokens = require('./tokens/selectors');
 const users = require('./users/selectors');
 const repositories = require('./repositories/selectors');
 const commits = require('./commits/selectors');
@@ -16,7 +16,7 @@ const db = {
 };
 
 module.exports = {
-  ...ci,
+  ...tokens,
   ...users,
   ...repositories,
   ...commits,

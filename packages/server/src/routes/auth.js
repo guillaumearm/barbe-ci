@@ -10,7 +10,7 @@ module.exports = (router) => {
 
   router.get('/auth', async ctx => {
     const store = ctx.store
-    if (ctx.isAuthenticated() && !store.getCiRefreshToken()) {
+    if (ctx.isAuthenticated() && !store.getRefreshToken()) {
       ctx.logout();
       return ctx.redirect('/auth');
     }

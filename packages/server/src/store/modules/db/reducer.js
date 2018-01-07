@@ -12,7 +12,7 @@ const loadDbReducer = toReducer((action) => {
 module.exports = composeReducers(
   combineReducers({
     users: require('./users/reducer'),
-    ci: require('./ci/reducer'),
+    tokens: require('./tokens/reducer'),
     repositories: require('./repositories/reducer'),
     commits: require('./commits/reducer'),
   }),
