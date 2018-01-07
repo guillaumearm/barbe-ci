@@ -14,6 +14,7 @@ module.exports = composeReducers(
     users: require('./users/reducer'),
     ci: require('./ci/reducer'),
     repositories: require('./repositories/reducer'),
+    commits: require('./commits/reducer'),
   }),
   loadDbReducer,
 )

@@ -7,7 +7,7 @@ const branchResolver = (store) => (next) => async (action) => {
     const { push, repository } = action.payload;
     const repositoryFullName = repository.full_name;
     const { branchName } = push.change;
-    const lastCommit = store.getLastCommit({ branchName, repositoryFullName })
+    const lastCommit = store.getBranchLastCommit({ branchName, repositoryFullName })
     if (isNormalPush(push) && push.change.old.target.hash !== lastCommit) {
       await store.reloadBranch(repositoryFullName, branchName, push);
     }

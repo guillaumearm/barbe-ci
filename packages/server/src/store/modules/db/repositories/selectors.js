@@ -37,23 +37,36 @@ const getBranch = createSelector(
   (repository, branchName) => path(['branches', branchName], repository)
 )
 
-const getCommits = createSelector(
+const getBranchCommits = createSelector(
   getBranch,
   prop('commits'),
 )
 
-const getLastCommit = createSelector(
-  getCommits,
+const getBranchLastCommit = createSelector(
+  getBranchCommits,
   prop(0),
+)
+
+const getAllBranchesCommits = createSelector(
+  getRepositories,
+  _.flatMap(
+    _.pipe(
+      _.get('branches'),
+      _.flatMap(_.pipe(
+        _.get('commits'),
+      )),
+    )
+  )
 )
 
 module.exports = {
   getRepositories,
   getRepository,
-  getCommits,
-  getLastCommit,
+  getBranchCommits,
+  getBranchLastCommit,
   getBranch,
   getBranches,
   getBranchesNames,
   getRepositoriesNames,
+  getAllBranchesCommits,
 }
