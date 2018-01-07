@@ -37,6 +37,7 @@ const launchServer = async () => {
     console.log(`Listening on ${serverConfiguration.PORT}.`);
     await store.reloadRepositories(store.getRepositoriesNames());
     console.log('Repositories - Reloaded.');
+    await store.cleanCommits();
   })
 }
 

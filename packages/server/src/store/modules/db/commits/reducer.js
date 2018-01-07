@@ -12,5 +12,8 @@ module.exports = toReducer((action) => {
     const commits = getIndexedCommits('payload.resolvedBranch.commits')(action);
     return _.merge(_, commits);
   }
+  if (action.type === 'CLEAN_COMMITS') {
+    return _.omit(action.payload.commits);
+  }
   return _.identity;
 }, {})
