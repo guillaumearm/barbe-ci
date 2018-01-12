@@ -1,8 +1,5 @@
 module.exports = (router, store) => {
   if (store.getIsDebug()) {
-    router.get('/commits/toClean', async (ctx) => {
-      ctx.body = ctx.store.getCommitsToClean();
-    })
     router.get('/commits/all', async (ctx) => {
       ctx.body = ctx.store.getCommitsHashes();
     })

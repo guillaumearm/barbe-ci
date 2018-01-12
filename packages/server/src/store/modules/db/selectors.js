@@ -8,7 +8,7 @@ const commits = require('./commits/selectors');
 
 const db = {
   getDb: propOr({}, 'db'),
-  getCommitsToClean: createSelector(
+  getDetachedCommits: createSelector(
     commits.getCommitsHashes,
     repositories.getAllBranchesCommits,
     (commits, branchesCommits) => difference(commits, branchesCommits),

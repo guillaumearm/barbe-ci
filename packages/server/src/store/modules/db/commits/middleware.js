@@ -2,8 +2,8 @@ const { both } = require('ramda');
 const { pipeMiddlewares } = require('redux-fun');
 const _ = require('lodash/fp');
 
-
-const shouldCleanCommits = _.anyPass([
+const findDetachedCommits = _.anyPass([
+  _.propEq('type', 'SEARCH_FOR_DETACHED_COMMITS'),
   _.propEq('type', 'REPOSITORY_NOT_FOUND'),
   both(
     _.propEq('type', 'RELOAD_BRANCH'),
@@ -23,31 +23,20 @@ const shouldCleanCommits = _.anyPass([
   ),
 ]);
 
-const setCommitsToClean = (store) => (next) => async (action) => {
-  if (shouldCleanCommits(action)) {
+const setDetachedCommits = (store) => (next) => async (action) => {
+  if (findDetachedCommits(action)) {
     const nexted = await next(action);
-    await store.cleanCommits();
-    return nexted;
-  }
-  if (action.type === 'CLEAN_COMMITS') {
-    const commitsToClean = store.getCommitsToClean();
-    const nexted = await next(
-      _.set('payload.commits', commitsToClean, action)
-    )
-    if (commitsToClean.length) {
+    const detachedCommits = store.getDetachedCommits();
+    if (detachedCommits.length) {
       // eslint-disable-next-line no-console
-      console.log(`Commits - ${commitsToClean.length} commits removed`);
+      console.log(`Found ${detachedCommits.length} detached commits`);
+      await store.haveDetachedCommits(detachedCommits);
     }
     return nexted;
   }
   return await next(action);
 }
 
-const commitsCleaner = () => (next) => async (action) => {
-  return await next(action);
-}
-
 module.exports = pipeMiddlewares(
-  setCommitsToClean,
-  commitsCleaner,
+  setDetachedCommits,
 )
