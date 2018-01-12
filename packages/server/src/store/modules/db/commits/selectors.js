@@ -2,10 +2,17 @@ const _ = require('lodash/fp');
 const { createSelector } = require('reselect');
 const { reject, propEq, pipe, path, keys } = require('ramda');
 
+const getAllCommits = path(['db', 'commits']);
+
 const getCommits = pipe(
-  path(['db', 'commits']),
+  getAllCommits,
   reject(propEq('detached', true)),
 );
+
+const getAllCommitsHashes = createSelector(
+  getAllCommits,
+  keys
+)
 
 const getCommitsHashes = createSelector(
   getCommits,
@@ -14,11 +21,13 @@ const getCommitsHashes = createSelector(
 
 const getCommit = createSelector(
   (state, { hash }) => hash,
-  getCommits,
+  getAllCommits,
   _.get,
 )
 
 module.exports = {
+  getAllCommits,
+  getAllCommitsHashes,
   getCommit,
   getCommits,
   getCommitsHashes,
