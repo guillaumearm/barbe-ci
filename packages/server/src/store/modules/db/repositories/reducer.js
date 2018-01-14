@@ -1,6 +1,6 @@
 const _ = require('lodash/fp');
 const { merge, __, pipe, identity } = require('ramda');
-const { toReducer } = require('redux-fun')
+const { withDefaultState, toReducer } = require('redux-fun')
 const branchesUpdater = require('./updaters/branches');
 
 const repoUpdater = (action) => {
@@ -13,7 +13,7 @@ const repoUpdater = (action) => {
   return _.update('branches', branchesUpdater(action));
 };
 
-module.exports = toReducer((action) => {
+module.exports = toReducer(withDefaultState({}, (action) => {
   if (action.type === 'REPOSITORY_NOT_FOUND') {
     return _.unset(action.payload.repositoryFullName);
   }
@@ -24,4 +24,4 @@ module.exports = toReducer((action) => {
     return _.update(action.payload.repositoryFullName, repoUpdater(action))
   }
   return identity;
-}, {});
+}));

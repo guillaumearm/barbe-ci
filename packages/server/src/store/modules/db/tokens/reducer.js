@@ -1,5 +1,5 @@
 const { identity, pipe, assoc } = require('ramda');
-const { toReducer } = require('redux-fun')
+const { withDefaultState, toReducer } = require('redux-fun')
 
 const initialState = {};
 
@@ -8,7 +8,7 @@ const updateTokens = (action) => pipe(
   assoc('refreshToken', action.payload.refreshToken),
 )
 
-module.exports = toReducer((action) => {
+module.exports = toReducer(withDefaultState(initialState, (action) => {
   switch (action.type) {
     case 'USER_LOGIN': {
       return updateTokens(action);
@@ -20,4 +20,4 @@ module.exports = toReducer((action) => {
       return identity;
     }
   }
-}, initialState);
+}));

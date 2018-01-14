@@ -1,9 +1,9 @@
 const { identity, assoc } = require('ramda');
-const { toReducer } = require('redux-fun')
+const { withDefaultState, toReducer } = require('redux-fun')
 
 const initialState = {}
 
-module.exports = toReducer((action) => {
+module.exports = toReducer(withDefaultState(initialState, (action) => {
   switch (action.type) {
     case 'USER_LOGIN': {
       const user = action.payload;
@@ -13,4 +13,4 @@ module.exports = toReducer((action) => {
       return identity;
     }
   }
-}, initialState)
+}))

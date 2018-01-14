@@ -1,10 +1,10 @@
 const { reduce } = require('ramda');
 const _ = require('lodash/fp');
-const { toReducer } = require('redux-fun');
+const { withDefaultState, toReducer } = require('redux-fun');
 
 const getIndexedCommits = path => _.compose(_.indexBy('hash'), _.getOr([], path));
 
-module.exports = toReducer((action) => {
+module.exports = toReducer(withDefaultState({}, (action) => {
   if (action.type === 'GIT_PUSH') {
     const commits = getIndexedCommits('payload.push.change.commits')(action);
     return _.merge(_, commits);
@@ -20,4 +20,4 @@ module.exports = toReducer((action) => {
     ), state, commits);
   }
   return _.identity;
-}, {});
+}));
