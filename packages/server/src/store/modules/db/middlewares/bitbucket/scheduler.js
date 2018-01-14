@@ -1,4 +1,4 @@
-const { pipeMiddlewares, preserveAsyncFlow } = require('redux-fun');
+const { pipeMiddlewares, preserveAsyncSeries } = require('redux-fun');
 
 const gitPushRetainer = () => (next) => {
   let reloadingBranches = 0;
@@ -38,7 +38,7 @@ const gitPushRetainer = () => (next) => {
 
 module.exports = pipeMiddlewares(
   gitPushRetainer,
-  preserveAsyncFlow('GIT_PUSH'),
-  preserveAsyncFlow('RELOAD_BRANCH'),
-  preserveAsyncFlow('RELOAD_REPOSITORIES'),
+  preserveAsyncSeries('GIT_PUSH'),
+  preserveAsyncSeries('RELOAD_BRANCH'),
+  preserveAsyncSeries('RELOAD_REPOSITORIES'),
 )
