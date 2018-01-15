@@ -21,5 +21,6 @@ module.exports = concat(
     tokens: require('./tokens/updater'),
     repositories: require('./repositories/updater'),
     commits: require('./commits/updater'),
+    builds: require('./builds/updater'),
   }),
 )

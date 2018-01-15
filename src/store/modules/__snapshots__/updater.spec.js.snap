@@ -4,6 +4,10 @@ exports[`store/updater returns initial state 1`] = `
 Object {
   "credentials": Object {},
   "db": Object {
+    "builds": Object {
+      "entities": Object {},
+      "queue": Array [],
+    },
     "commits": Object {},
     "repositories": Object {},
     "tokens": Object {},

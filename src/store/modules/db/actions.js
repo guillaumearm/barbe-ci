@@ -37,4 +37,5 @@ module.exports = {
   bbGetAll,
   ...require('./repositories/actions'),
   ...require('./commits/actions'),
+  ...require('./builds/actions')
 }
