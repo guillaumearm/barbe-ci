@@ -1,8 +1,2 @@
-SDP Pointing System
+BarbeCi
 =============
-
-### Download
-```bash
-$ git clone https://trapcodien@bitbucket.org/trapcodien/sdp.git
-$ cd sdp
-```
