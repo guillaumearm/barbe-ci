@@ -1,3 +1,8 @@
+<a name="0.15.1"></a>
+## [0.15.1](https://github.com/guillaumearm/barbe-ci/compare/v0.15.0...v0.15.1) (2018-01-21)
+
+
+
 <a name="0.15.0"></a>
 # [0.15.0](https://github.com/guillaumearm/barbe-ci/compare/v0.13.0...v0.15.0) (2018-01-21)
 
