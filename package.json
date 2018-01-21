@@ -43,8 +43,11 @@
     "url": "https://github.com/guillaumearm/barbe-ci.git"
   },
   "keywords": [
-    "pointing",
-    "system"
+    "private",
+    "ci",
+    "test",
+    "integration",
+    "bearded"
   ],
   "author": "Guillaume ARM",
   "license": "ISC",
