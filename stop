@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker kill sdp-api
+CONTAINER_NAME="barbe-ci-container"
+
+docker kill $CONTAINER_NAME

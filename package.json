@@ -1,7 +1,7 @@
 {
-  "name": "sdp-api",
-  "version": "0.7.0",
-  "description": "Systeme De Pointage",
+  "name": "barbe-ci",
+  "version": "0.14.0",
+  "description": "Continuous integration for bearded",
   "bin": [
     "src/index.js"
   ],
@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/trapcodien/sdp.git"
+    "url": "https://github.com/guillaumearm/barbe-ci.git"
   },
   "keywords": [
     "pointing",
@@ -43,7 +43,7 @@
   ],
   "author": "Guillaume ARM",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/trapcodien/sdp#readme",
+  "homepage": "https://github.com/guillaumearm/barbe-ci",
   "devDependencies": {
     "eslint": "^4.12.1",
     "eslint-plugin-node": "^5.2.1",
