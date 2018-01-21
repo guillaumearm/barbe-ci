@@ -13,6 +13,7 @@
     "test:all": "npm run lint",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
+    "preversion": "npm run test",
     "precommit": "npm run lint-staged",
     "docker:make": "./make",
     "docker:start": "./start",
