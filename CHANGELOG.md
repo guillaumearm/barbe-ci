@@ -1,3 +1,13 @@
+<a name="0.15.2"></a>
+## [0.15.2](https://github.com/guillaumearm/barbe-ci/compare/v0.15.1...v0.15.2) (2018-01-22)
+
+
+### Bug Fixes
+
+* **security:** remove pushed bitbucket credentials ([619b476](https://github.com/guillaumearm/barbe-ci/commit/619b476))
+
+
+
 <a name="0.15.1"></a>
 ## [0.15.1](https://github.com/guillaumearm/barbe-ci/compare/v0.15.0...v0.15.1) (2018-01-21)
 
