@@ -1,7 +1,7 @@
 {
   "name": "barbe-ci",
   "version": "0.15.1",
-  "description": "Continuous integration for bearded",
+  "description": "lightweight continuous integration for bearded",
   "bin": [
     "src/index.js"
   ],
