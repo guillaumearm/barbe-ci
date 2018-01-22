@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
+const fs = require('fs');
+const { promisify } = require('util');
 const Koa = require('koa');
 const session = require('koa-session');
 
@@ -9,21 +11,25 @@ const getMiddlewares = require('./middlewares');
 const createStore = require('./store');
 const createRouter = require('./routes');
 
+const readFile = promisify(fs.readFile);
+
+const readJsonFile = async (path) => {
+  const fileContent = await readFile(path);
+  return JSON.parse(fileContent);
+}
+
 const app = new Koa();
 app.keys = ['simpleci']
 app.use(session({}, app))
 
-const initialState = {
+const getInitialState = (credentials) => ({
   serverConfiguration,
-  credentials: {
-    clientId: 'fwrGpD44hvsE3LpSMx',
-    clientSecret: 's9DWJqacAv5bRdkzqPEXLCRNvfrrYYtH',
-  }
-}
-
+  credentials,
+});
 
 const launchServer = async () => {
-  const store = createStore(initialState)
+  const credentials = await readJsonFile('./credentials.json');
+  const store = createStore(getInitialState(credentials))
   const router = createRouter(store);
   app.context.store = store;
   app.router = router;
