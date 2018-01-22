@@ -16,6 +16,9 @@
     "plugin:node/recommended"
   ],
   "rules": {
+    "node/no-unpublished-require": ["error", {
+      "allowModules": ["conventional-recommended-bump"]
+    }],
     "no-multi-spaces": ["error"],
     "node/exports-style": ["error", "module.exports"]
   }
