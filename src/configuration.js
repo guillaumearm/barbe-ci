@@ -1,6 +1,6 @@
 const path = require('path');
 
-var argv = require('yargs')
+const argv = require('yargs')
   .usage('Usage: $0 [options]')
   .example('$0 -p 3000 --verbose', 'start server on port 3000 (in verbose mode)')
   .describe('version', 'Print current version')

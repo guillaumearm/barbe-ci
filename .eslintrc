@@ -16,6 +16,7 @@
     "plugin:node/recommended"
   ],
   "rules": {
+    "no-var": "error",
     "node/no-unpublished-require": ["error", {
       "allowModules": ["conventional-recommended-bump"]
     }],
