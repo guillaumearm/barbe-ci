@@ -47,8 +47,7 @@
   "keywords": [
     "private",
     "ci",
-    "test",
-    "integration",
+    "integration-test",
     "bearded"
   ],
   "author": "Guillaume ARM",
