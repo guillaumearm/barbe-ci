@@ -15,7 +15,7 @@
     "test:all": "npm run lint",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
-    "bump": "node scripts/bump.js",
+    "bump": "conventional-bump",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "preversion": "npm run test",
     "precommit": "npm run lint-staged",
