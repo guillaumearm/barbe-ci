@@ -1,3 +1,23 @@
+<a name="0.16.0"></a>
+# [0.16.0](https://github.com/guillaumearm/barbe-ci/compare/v0.15.3...v0.16.0) (2018-01-31)
+
+
+### Bug Fixes
+
+* **debug:** fix debug routes ([8cf806b](https://github.com/guillaumearm/barbe-ci/commit/8cf806b))
+* **debug:** rename /debug/cleanlogs in /debug/clean/logs ([4c9ffd2](https://github.com/guillaumearm/barbe-ci/commit/4c9ffd2))
+* **debug:** use getAllCommitsHashes selector in /debug/commits/all route ([e82368d](https://github.com/guillaumearm/barbe-ci/commit/e82368d))
+* **errors:** human readable message ([07f7df7](https://github.com/guillaumearm/barbe-ci/commit/07f7df7))
+* **packages:** use request-promise instead of axios ([1ea3153](https://github.com/guillaumearm/barbe-ci/commit/1ea3153))
+* **unused:** remove options ([9742501](https://github.com/guillaumearm/barbe-ci/commit/9742501))
+
+
+### Features
+
+* **debug:** add /debug/commits route ([c884311](https://github.com/guillaumearm/barbe-ci/commit/c884311))
+
+
+
 <a name="0.15.3"></a>
 ## [0.15.3](https://github.com/guillaumearm/barbe-ci/compare/v0.15.2...v0.15.3) (2018-01-27)
 
