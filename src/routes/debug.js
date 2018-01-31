@@ -4,7 +4,7 @@ module.exports = (router, store) => {
       ctx.body = ctx.store.getState()
     })
     router.get('/debug/commits/all', async (ctx) => {
-      ctx.body = ctx.store.getCommitsHashes();
+      ctx.body = ctx.store.getAllCommitsHashes();
     })
     router.get('/debug/commits/branches', async (ctx) => {
       ctx.body = ctx.store.getAllBranchesCommits();
