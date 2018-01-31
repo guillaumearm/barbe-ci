@@ -15,7 +15,7 @@ module.exports = (router, store) => {
     router.get('/debug/logs', async (ctx) => {
       ctx.body = ctx.store.getLogs()
     })
-    router.get('/debug/cleanlogs', async (ctx) => {
+    router.get('/debug/clean/logs', async (ctx) => {
       ctx.store.cleanLogs();
       ctx.body = 'OK';
     })
