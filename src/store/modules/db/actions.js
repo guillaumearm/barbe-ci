@@ -18,14 +18,14 @@ const loadDb = () => ({
   payload: {},
 })
 
-const bbGet = (endpoint, options = {}) => ({
+const bbGet = (endpoint) => ({
   type: 'BITBUCKET_GET',
-  payload: { request: { type: 'get', endpoint, options } },
+  payload: { request: { type: 'get', endpoint } },
 })
 
-const bbGetAll = (endpoint, options = {}) => ({
+const bbGetAll = (endpoint) => ({
   type: 'BITBUCKET_GET',
-  payload: { request: { type: 'getAll', endpoint, options } },
+  payload: { request: { type: 'getAll', endpoint } },
 })
 
 module.exports = {
