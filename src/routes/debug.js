@@ -4,10 +4,13 @@ module.exports = (router, store) => {
       ctx.body = ctx.store.getState()
     })
     router.get('/debug/commits/all', async (ctx) => {
-      ctx.body = ctx.store.getAllCommitsHashes();
+      ctx.body = ctx.store.getAllCommitsHashes()
     })
     router.get('/debug/commits/branches', async (ctx) => {
-      ctx.body = ctx.store.getAllBranchesCommits();
+      ctx.body = ctx.store.getAllBranchesCommits()
+    })
+    router.get('/debug/commits', async (ctx) => {
+      ctx.body = ctx.store.getCommitsHashes()
     })
     router.get('/debug/db', async (ctx) => {
       ctx.body = ctx.store.getDb()
@@ -16,8 +19,8 @@ module.exports = (router, store) => {
       ctx.body = ctx.store.getLogs()
     })
     router.get('/debug/clean/logs', async (ctx) => {
-      ctx.store.cleanLogs();
-      ctx.body = 'OK';
+      ctx.store.cleanLogs()
+      ctx.body = 'OK'
     })
   }
 }
