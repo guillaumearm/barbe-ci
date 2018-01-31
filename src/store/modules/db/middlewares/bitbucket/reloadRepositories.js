@@ -14,7 +14,7 @@ module.exports = (store) => (next) => async (action) => {
           store.repositoryNotFound(repository);
           console.log(`'${repository}' not found, remove repository.`);
         } else {
-          console.log(e);
+          console.log(e.message || e);
         }
       }
     }
