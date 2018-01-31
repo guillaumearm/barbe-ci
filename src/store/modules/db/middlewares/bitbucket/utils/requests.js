@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
 const _ = require('lodash/fp')
-const { mergeDeepLeft, applyTo, pipe, prop } = require('ramda');
-const { promisify } = require('util');
-const axios = require('axios');
-const requestPost = promisify(require('request').post)
+const { applyTo, pipe, prop } = require('ramda');
+const request = require('request-promise');
 
-const get = async (store, endpoint, options = {}) => {
-  const makeRefresh = () => requestPost(
+const get = async (store, endpoint) => {
+  const makeRefresh = () => request.post(
     `https://bitbucket.org/site/oauth2/access_token`,
     {
       form: {
@@ -19,30 +17,32 @@ const get = async (store, endpoint, options = {}) => {
       },
     }
   )
-  const makeQuery = () => axios.get(
+  const makeQuery = () => request.get(
     endpoint,
-    mergeDeepLeft(options, {
-      params: {
+    {
+      qs: {
         access_token: store.getAccessToken(),
       },
       auth: {
         username: store.getClientId(),
         password: store.getClientSecret(),
       },
-    })
+    }
   );
   try {
-    return (await makeQuery()).data
+    const response = await makeQuery()
+    return JSON.parse(response)
   } catch (e) {
-    const message = _.get('response.data.error.message', e) || _.get('message', e);
-    const status = _.get('response.status', e);
-    // console.log(e.message);
+    const bodyString = _.get('response.body', e);
+    const body = JSON.parse(bodyString)
+    const message = _.get('error.message', body) || _.get('message', e);
+    const status = _.get('response.statusCode', e);
     if (status === 401 && /^Access token expired/.test(message)) {
       console.log('Access token expired, refresh token.');
       const refreshResult = await makeRefresh();
-      const { access_token, refresh_token } = JSON.parse(refreshResult.body)
+      const { access_token, refresh_token } = JSON.parse(refreshResult)
       store.updateTokens(access_token, refresh_token)
-      return (await makeQuery()).data
+      return await makeQuery()
     } else if (status === 404) {
       throw new Error('404 not found')
     } else if (message) {
@@ -53,12 +53,12 @@ const get = async (store, endpoint, options = {}) => {
   }
 }
 
-const getAll = async (store, endpoint, options = {}) => {
-  let response = await get(store, endpoint, options);
+const getAll = async (store, endpoint) => {
+  let response = await get(store, endpoint);
   const responses = [response];
   while (response.next) {
     console.log('[bitbucket getAll] - Additional request');
-    response = await get(store, response.next, options);
+    response = await get(store, response.next);
     responses.push(response);
   }
   return applyTo(responses)(pipe(
