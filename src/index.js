@@ -19,7 +19,7 @@ const readJsonFile = async (path) => {
 }
 
 const app = new Koa();
-app.keys = ['simpleci']
+app.keys = ['barbeci']
 app.use(session({}, app))
 
 const getInitialState = (credentials) => ({
