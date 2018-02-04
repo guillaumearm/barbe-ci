@@ -30,9 +30,9 @@ const getInitialState = (credentials) => ({
 const launchServer = async () => {
   const credentials = await readJsonFile('./credentials.json');
   const store = createStore(getInitialState(credentials))
-  const router = createRouter(store);
+
   app.context.store = store;
-  app.router = router;
+  app.router = createRouter(store);
 
   await store.loadDb();
 
