@@ -1,6 +1,6 @@
 const reducer = require('./reducer');
 
-describe('db:users/reducer', () => {
+describe('store:db:users/reducer', () => {
   const makeUser = (username) => ({ profile: { username } })
   const userLogin = (username) => ({
     type: 'USER_LOGIN',

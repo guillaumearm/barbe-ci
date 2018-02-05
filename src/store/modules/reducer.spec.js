@@ -1,6 +1,6 @@
 const reducer = require('./reducer');
 
-describe('store/rootReducer', () => {
+describe('store/reducer', () => {
   const unknownAction = { type: 'UNKNOWN' };
   const initialState = reducer(undefined, unknownAction);
   it('returns initial state', () => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`store/rootReducer returns initial state 1`] = `
+exports[`store/reducer returns initial state 1`] = `
 Object {
   "credentials": Object {},
   "db": Object {

@@ -1,6 +1,6 @@
 const { getUser, getUsers } = require('./selectors');
 
-describe('db:users/selectors', () => {
+describe('store:db:users/selectors', () => {
   const userSample = { username: 'user1', sessionUuid: 'abcdef' };
   describe('getUsers', () => {
     it('returns an empty object when state is empty', () => {
