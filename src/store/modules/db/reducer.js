@@ -1,9 +1,15 @@
-const { always, identity } = require('ramda');
+const { both, always, propEq, identity } = require('ramda');
+const { hasPath } = require('ramda-adjunct');
 const { combineReducers } = require('redux')
 const { toReducer, composeReducers } = require('redux-fun');
 
+const isLoadDb = both(
+  propEq('type', 'LOAD_DB'),
+  hasPath(['payload', 'db']),
+);
+
 const loadDbReducer = toReducer((action) => {
-  if (action.type === 'LOAD_DB' && action.payload.db) {
+  if (isLoadDb(action)) {
     return always(action.payload.db);
   }
   return identity;
