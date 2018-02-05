@@ -11,8 +11,9 @@
     "clean": "rimraf ./coverage",
     "commit": "git-cz",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "test": "npm run lint",
-    "test:all": "npm run lint",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "npm run test -- --watch",
+    "test:all": "npm run lint && npm run test",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
     "bump": "conventional-bump",
@@ -63,6 +64,7 @@
     "conventional-recommended-bump": "^1.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.12.1",
+    "eslint-plugin-jest": "^21.7.0",
     "eslint-plugin-node": "^5.2.1",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
@@ -101,6 +103,8 @@
     }
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
