@@ -1,7 +1,6 @@
+const { getOwnProp } = require('redux-fun')
 const { createSelector } = require('reselect')
 const { pathOr, find, propEq, values } = require('ramda')
-
-const getOwnProp = (property) => (state, ownProps = {}) => ownProps[property]
 
 const getUsers = pathOr({}, ['db', 'users']);
 
