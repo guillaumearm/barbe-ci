@@ -86,6 +86,7 @@
     "mkdirp-promise": "^5.0.1",
     "passport-bitbucket-oauth2": "^0.1.2",
     "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.4.1",
     "redux": "^3.7.2",
     "redux-fun": "^1.2.0",
     "request": "^2.83.0",
