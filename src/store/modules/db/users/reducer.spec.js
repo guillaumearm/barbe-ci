@@ -14,7 +14,7 @@ describe('db:users/reducer', () => {
   it('returns an empty object as default state', () => {
     expect(reducer(undefined, unknownAction)).toEqual({});
   })
-  it('does not update state on unknozn action', () => {
+  it('does not update state on unknown action', () => {
     expect(reducer(initialState, unknownAction)).toEqual(initialState);
   })
   it('adds users on [USER_LOGIN]', () => {
