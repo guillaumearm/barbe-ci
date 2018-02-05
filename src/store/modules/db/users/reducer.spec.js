@@ -1,15 +1,15 @@
 const reducer = require('./reducer');
 
 describe('db:users/reducer', () => {
+  const makeUser = (username) => ({ profile: { username } })
   const userLogin = (username) => ({
     type: 'USER_LOGIN',
-    payload: {
-      profile: { username }
-    },
+    payload: makeUser(username)
   });
   const unknownAction = { type: 'UNKNOWN' };
+  const user1 = { profile: { username: 'user1', additionalInfos: true } };
   const initialState = {
-    user1: { profile: { username: 'user1', additionalInfos: true } },
+    user1,
   }
   it('returns an empty object as default state', () => {
     expect(reducer(undefined, unknownAction)).toEqual({});
@@ -19,13 +19,13 @@ describe('db:users/reducer', () => {
   })
   it('adds users on [USER_LOGIN]', () => {
     expect(reducer(initialState, userLogin('user2'))).toEqual({
-      user1: { profile: { username: 'user1', additionalInfos: true } },
-      user2: { profile: { username: 'user2' } },
+      user1,
+      user2: makeUser('user2'),
     })
   })
   it('replace an user on [USER_LOGIN]', () => {
     expect(reducer(initialState, userLogin('user1'))).toEqual({
-      user1: { profile: { username: 'user1' } },
+      user1: makeUser('user1'),
     })
   })
 })
