@@ -1,9 +1,9 @@
 const { createSelector } = require('reselect')
 const { pathOr, find, propEq, values } = require('ramda')
 
-const getUsers = pathOr({}, ['db', 'users']);
-
 const getOwnProp = (property) => (state, ownProps = {}) => ownProps[property]
+
+const getUsers = pathOr({}, ['db', 'users']);
 
 const getUser = createSelector(
   getUsers,
