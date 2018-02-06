@@ -14,7 +14,10 @@ const commitNotFound = commit => compose(
 const getHashes = map(prop('hash'))
 
 const updateCommits = commits => _.update('commits', (
-  concat(getHashes(commits))
+  _.pipe(
+    _.defaultTo([]),
+    concat(getHashes(commits))
+  )
 ))
 
 const replaceCommits = commits => _.set('commits', getHashes(commits))
