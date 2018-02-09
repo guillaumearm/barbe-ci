@@ -1,30 +1,30 @@
-const reducer = require('./reducer');
+const updater = require('./updater');
 
-describe('store:db:users/reducer', () => {
+describe('store:db:users/updater', () => {
   const makeUser = (username) => ({ profile: { username } })
-  const userLogin = (username) => ({
+  const userLogin = (username) => updater({
     type: 'USER_LOGIN',
     payload: makeUser(username)
   });
-  const unknownAction = { type: 'UNKNOWN' };
+  const unknownAction = updater({ type: 'UNKNOWN' });
   const user1 = { profile: { username: 'user1', additionalInfos: true } };
   const initialState = {
     user1,
   }
   it('returns an empty object as default state', () => {
-    expect(reducer(undefined, unknownAction)).toEqual({});
+    expect(unknownAction(undefined)).toEqual({});
   })
   it('does not update state on unknown action', () => {
-    expect(reducer(initialState, unknownAction)).toEqual(initialState);
+    expect(unknownAction(initialState)).toEqual(initialState);
   })
   it('adds users on [USER_LOGIN]', () => {
-    expect(reducer(initialState, userLogin('user2'))).toEqual({
+    expect(userLogin('user2')(initialState)).toEqual({
       user1,
       user2: makeUser('user2'),
     })
   })
   it('replace an user on [USER_LOGIN]', () => {
-    expect(reducer(initialState, userLogin('user1'))).toEqual({
+    expect(userLogin('user1')(initialState)).toEqual({
       user1: makeUser('user1'),
     })
   })
