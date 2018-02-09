@@ -1,6 +1,8 @@
 const { compose } = require('ramda');
 const { createStore } = require('redux');
-const rootReducer = require('./modules/reducer');
+const { toReducer } = require('redux-fun');
+
+const rootReducer = toReducer(require('./modules/updater'));
 
 module.exports = (initialState) => (
   createStore(
