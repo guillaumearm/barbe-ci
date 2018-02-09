@@ -1,29 +1,29 @@
-const reducer = require('./reducer');
+const updater = require('./updater');
 
-describe('logs/reducer', () => {
-  const unknownAction = { type: 'UNKNOWN' };
+describe('store:logs/updater', () => {
+  const unknownAction = updater({ type: 'UNKNOWN' });
+  const cleanLogs = updater({ type: 'CLEAN_LOGS' })
   const createDebugAction = (type) => ({
     type,
     payload: {},
     meta: { debug: true, }
   })
-  const cleanLogs = () => ({ type: 'CLEAN_LOGS' })
   const action1 = createDebugAction('ACTION_1')
   const initialState = [action1];
   it('returns an empty array as default state', () => {
-    expect(reducer(undefined, unknownAction)).toEqual([]);
+    expect(unknownAction(undefined)).toEqual([]);
   });
   it('does not update state on unknown action', () => {
-    expect(reducer(initialState, unknownAction)).toBe(initialState);
+    expect(unknownAction(initialState)).toBe(initialState);
   });
   it('logs action when meta.debug is true', () => {
     const action2 = createDebugAction('ACTION_2');
-    expect(reducer(initialState, action2)).toEqual([
+    expect(updater(action2)(initialState)).toEqual([
       action2,
       action1,
     ])
   })
   it('clean logs when receive a [CLEAN_LOGS] action', () => {
-    expect(reducer(initialState, cleanLogs())).toEqual([]);
+    expect(cleanLogs(initialState)).toEqual([]);
   });
 });
