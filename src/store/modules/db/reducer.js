@@ -20,7 +20,7 @@ module.exports = composeReducers(
     users: toReducer(require('./users/updater')),
     tokens: toReducer(require('./tokens/updater')),
     repositories: require('./repositories/reducer'),
-    commits: require('./commits/reducer'),
+    commits: toReducer(require('./commits/updater')),
   }),
   loadDbReducer,
 )
