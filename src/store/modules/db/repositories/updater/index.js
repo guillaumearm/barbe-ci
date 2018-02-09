@@ -1,7 +1,7 @@
 const _ = require('lodash/fp');
 const { merge, __, pipe, identity } = require('ramda');
 const { withDefaultState, toReducer } = require('redux-fun')
-const branchesUpdater = require('./updaters/branches');
+const branchesUpdater = require('./branches');
 
 const repoUpdater = (action) => {
   if (action.type === 'GIT_PUSH') {
