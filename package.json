@@ -24,7 +24,7 @@
     "docker:make": "./make",
     "docker:start": "./start",
     "docker:stop": "./stop",
-    "help": "node node_modules/npm-scripts-help"
+    "help": "npm-scripts-help"
   },
   "scriptshelp": {
     "dev": "start dev server (default port to 8080)",
@@ -71,7 +71,7 @@
     "jest": "^21.2.1",
     "lint-staged": "^6.0.1",
     "nodemon": "^1.12.1",
-    "npm-scripts-help": "^0.7.0",
+    "npm-scripts-help": "^0.8.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.2"
   },
