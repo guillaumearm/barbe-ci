@@ -70,7 +70,6 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "axios": "^0.17.1",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.1.0",
