@@ -14,7 +14,7 @@
     "test": "NODE_ENV=test jest",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    "test:all": "npm run lint && npm run test",
+    "test:all": "npm run clean && npm run lint && npm run test",
     "lint": "eslint .",
     "lint-staged": "lint-staged",
     "bump": "conventional-bump",
