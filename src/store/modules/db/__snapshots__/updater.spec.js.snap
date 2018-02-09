@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`store:db/reducer returns initial state 1`] = `
+exports[`store:db/updater returns initial state 1`] = `
 Object {
   "commits": Object {},
   "repositories": Object {},

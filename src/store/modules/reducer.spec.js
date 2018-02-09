@@ -11,6 +11,6 @@ describe('store/reducer', () => {
     expect(reducer(undefined, unknownAction)).toMatchSnapshot();
   });
   it('does not update state on unknown action', () => {
-    expect(reducer(initialState, unknownAction)).toBe(initialState);
+    expect(reducer(initialState, unknownAction)).toEqual(initialState);
   });
 });
