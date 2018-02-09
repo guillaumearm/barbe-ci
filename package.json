@@ -15,11 +15,9 @@
     "test:coverage": "npm run test -- --coverage",
     "test:all": "npm run clean && npm run lint && npm run test",
     "lint": "eslint .",
-    "lint-staged": "lint-staged",
     "bump": "conventional-bump",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "preversion": "npm run test:all",
-    "precommit": "npm run lint-staged",
     "prepush": "npm run test:all",
     "docker:make": "./make",
     "docker:start": "./start",
@@ -40,11 +38,6 @@
     "docker:make": "build barbe-ci docker image for production",
     "docker:start": "start barbe-ci daemon on port 8081",
     "docker:stop": "stop barbe-ci daemon"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint"
-    ]
   },
   "private": "true",
   "repository": {
@@ -71,7 +64,6 @@
     "eslint-plugin-node": "^5.2.1",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
-    "lint-staged": "^6.0.1",
     "nodemon": "^1.12.1",
     "npm-scripts-help": "^0.8.0",
     "path": "^0.12.7",
