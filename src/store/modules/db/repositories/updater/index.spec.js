@@ -1,5 +1,5 @@
 const { dissoc } = require('ramda');
-const reducer = require('./reducer');
+const reducer = require('./');
 
 describe('store:db:repositories/reducer', () => {
   const unknownAction = { type: 'UNKNOWN' };
