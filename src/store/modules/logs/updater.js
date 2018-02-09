@@ -1,9 +1,6 @@
 const { path, concat } = require('ramda');
 const rfp = require('redux-fp');
-
-const matchAction = (predicate, leftUpdater, rightUpdater) => (
-  rfp.match((action) => () => predicate(action), leftUpdater, rightUpdater)
-);
+const { matchAction } = require('../../../utils')
 
 const initialState = [];
 

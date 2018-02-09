@@ -1,14 +1,8 @@
-const { curry, assoc, defaultTo, view, over, indexBy, prop, lensProp, compose, reduce } = require('ramda');
+const { assoc, defaultTo, indexBy, prop, lensProp, compose, reduce } = require('ramda');
 const { dotPath } = require('ramda-extension');
 const { mergeRight } = require('ramda-adjunct');
 const { decorate, withDefaultState, handleActions } = require('redux-fp');
-
-const overNonNil = curry((lens, f, state) => {
-  if (view(lens, state)) {
-    return over(lens, f, state);
-  }
-  return state;
-})
+const { overNonNil } = require('../../../../utils');
 
 module.exports = decorate(
   withDefaultState({}),
