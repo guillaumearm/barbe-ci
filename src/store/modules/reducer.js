@@ -1,12 +1,17 @@
-const { defaultTo } = require('ramda');
+const { always, identity } = require('ramda');
 const { combineReducers } = require('redux');
+const { withDefaultState } = require('redux-fp');
+const { toReducer } = require('redux-fun')
 
 const db = require('./db/reducer');
-const logs = require('./logs/reducer');
+const logs = require('./logs/updater');
+
+const credentials = withDefaultState({}, always(identity))
+const serverConfiguration = withDefaultState({}, always(identity))
 
 module.exports = combineReducers({
-  logs,
+  logs: toReducer(logs),
   db,
-  credentials: defaultTo({}),
-  serverConfiguration: defaultTo({}),
+  credentials: toReducer(credentials),
+  serverConfiguration: toReducer(serverConfiguration),
 });
