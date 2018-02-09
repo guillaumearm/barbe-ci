@@ -18,7 +18,7 @@ const loadDbReducer = toReducer((action) => {
 module.exports = composeReducers(
   combineReducers({
     users: toReducer(require('./users/updater')),
-    tokens: require('./tokens/reducer'),
+    tokens: toReducer(require('./tokens/updater')),
     repositories: require('./repositories/reducer'),
     commits: require('./commits/reducer'),
   }),
