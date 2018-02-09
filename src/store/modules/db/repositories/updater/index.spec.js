@@ -1,8 +1,8 @@
 const { dissoc } = require('ramda');
-const reducer = require('./');
+const updater = require('./');
 
-describe('store:db:repositories/reducer', () => {
-  const unknownAction = { type: 'UNKNOWN' };
+describe('store:db:repositories/updater', () => {
+  const unknownAction = updater({ type: 'UNKNOWN' });
   const makeRepositories = (full_name, commits = []) => ({
     [full_name]: {
       full_name,
@@ -23,21 +23,24 @@ describe('store:db:repositories/reducer', () => {
     ...makeRepositories('redux-polyglot', ['b1', 'b2', 'b3']),
   }
   it('returns an empty object as default state', () => {
-    expect(reducer(undefined, unknownAction)).toEqual({});
+    expect(unknownAction(undefined)).toEqual({});
   })
   it('does not update state on unknown action', () => {
-    expect(reducer(initialState, unknownAction)).toEqual(initialState);
+    expect(unknownAction(initialState)).toEqual(initialState);
   })
   describe('[REPOSITORY_NOT_FOUND] action', () => {
     test('remove repository if not found', () => {
-      const notFound = (repositoryFullName) => ({ type: 'REPOSITORY_NOT_FOUND', payload: { repositoryFullName } })
-      expect(reducer(initialState, notFound('barbe-ci'))).toEqual(
+      const notFound = (repositoryFullName) => updater({
+        type: 'REPOSITORY_NOT_FOUND',
+        payload: { repositoryFullName },
+      })
+      expect(notFound('barbe-ci')(initialState)).toEqual(
         dissoc('barbe-ci', initialState)
       )
     })
   });
   describe('[GIT_PUSH] action', () => {
-    const gitPush = (repoFullName, change = {}) => ({
+    const gitPush = (repoFullName, change = {}) => updater({
       type: 'GIT_PUSH',
       payload: {
         push: { change },
@@ -45,10 +48,10 @@ describe('store:db:repositories/reducer', () => {
       }
     })
     test('push on existing repo with no change does not update state', () => {
-      expect(reducer(initialState, gitPush('barbe-ci'))).toEqual(initialState)
+      expect(gitPush('barbe-ci')(initialState)).toEqual(initialState)
     });
     test('push a new repo', () => {
-      expect(reducer(initialState, gitPush('new-repo'))).toEqual({
+      expect(gitPush('new-repo')(initialState)).toEqual({
         ...initialState,
         'new-repo': {
           full_name: 'new-repo',
@@ -58,7 +61,7 @@ describe('store:db:repositories/reducer', () => {
     });
   });
   describe('[RELOAD_BRANCH] action', () => {
-    const reloadBranch = (repositoryFullName, commits = []) => ({
+    const reloadBranch = (repositoryFullName, commits = []) => updater({
       type: 'RELOAD_BRANCH',
       payload: {
         repositoryFullName,
@@ -67,10 +70,10 @@ describe('store:db:repositories/reducer', () => {
       },
     });
     test('reload branch on existing repository with no commits', () => {
-      expect(reducer(initialState, reloadBranch('barbe-ci'))).toEqual(initialState)
+      expect(reloadBranch('barbe-ci')(initialState)).toEqual(initialState)
     });
     test('reload branch on new repository with no commits', () => {
-      expect(reducer(initialState, reloadBranch('new-repo'))).toEqual({
+      expect(reloadBranch('new-repo')(initialState)).toEqual({
         ...initialState,
         'new-repo': {
           branches: { master: { commits: [] } },

@@ -1,27 +1,27 @@
-const _ = require('lodash/fp');
-const { merge, __, pipe, identity } = require('ramda');
-const { withDefaultState, toReducer } = require('redux-fun')
+const { merge, __, pipe, compose, dissoc } = require('ramda');
+const { dotPath } = require('ramda-extension');
+const { withDefaultState, decorate, handleActions } = require('redux-fp')
 const branchesUpdater = require('./branches');
 
-const repoUpdater = (action) => {
-  if (action.type === 'GIT_PUSH') {
-    return pipe(
-      merge(__, action.payload.repository),
-      _.update('branches', branchesUpdater(action))
-    )
-  }
-  return _.update('branches', branchesUpdater(action));
-};
+const { overProp, overPath } = require('../../../../../utils/fp');
 
-module.exports = toReducer(withDefaultState({}, (action) => {
-  if (action.type === 'REPOSITORY_NOT_FOUND') {
-    return _.unset(action.payload.repositoryFullName);
-  }
-  if (action.type === 'GIT_PUSH') {
-    return _.update(action.payload.repository.full_name, repoUpdater(action));
-  }
-  if (action.type === 'RELOAD_BRANCH') {
-    return _.update(action.payload.repositoryFullName, repoUpdater(action))
-  }
-  return identity;
-}));
+module.exports = decorate(
+  withDefaultState({}),
+  handleActions({
+    REPOSITORY_NOT_FOUND: compose(
+      dissoc,
+      dotPath('payload.repositoryFullName'),
+    ),
+    GIT_PUSH: action => (
+      overProp(action.payload.repository.full_name, pipe(
+        merge(__, action.payload.repository),
+        overProp('branches', branchesUpdater(action))
+      ))
+    ),
+    RELOAD_BRANCH: (action) => (
+      overPath([action.payload.repositoryFullName, 'branches'], (
+        branchesUpdater(action)
+      ))
+    )
+  }),
+)
