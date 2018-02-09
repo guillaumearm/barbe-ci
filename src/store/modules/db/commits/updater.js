@@ -2,7 +2,7 @@ const { assoc, defaultTo, indexBy, prop, lensProp, compose, reduce } = require('
 const { dotPath } = require('ramda-extension');
 const { mergeRight } = require('ramda-adjunct');
 const { decorate, withDefaultState, handleActions } = require('redux-fp');
-const { overNonNil } = require('../../../../utils');
+const { overNonNil } = require('../../../../utils/fp');
 
 module.exports = decorate(
   withDefaultState({}),
