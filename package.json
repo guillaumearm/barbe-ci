@@ -27,15 +27,19 @@
     "help": "npm-scripts-help"
   },
   "scriptshelp": {
-    "dev": "start dev server (default port to 8080)",
-    "start": "start production server (default port to 8000)",
-    "test": "start server tests",
+    "dev": "start development barbe-ci daemon (default port to 8080)",
+    "start": "start production barbe-ci daemon (default port to 8000)",
+    "clean": "clean artifacts and reports",
+    "commit": "make a commit using git commitizen",
+    "test": "start unit tests",
+    "test:watch": "start unit tests (in watch mode)",
+    "test:coverage": "start unit tests (with coverage report)",
+    "test:all": "start all kinds of tests (lint, unit, ...)",
     "lint": "lint all files in src/ folder",
-    "release": "bump version and make a release",
-    "docker:make": "build server docker image for production",
-    "docker:start": "start api on port 8081",
-    "docker:stop": "stop api",
-    "help": "show this help"
+    "bump": "bump version (for release only)",
+    "docker:make": "build barbe-ci docker image for production",
+    "docker:start": "start barbe-ci daemon on port 8081",
+    "docker:stop": "stop barbe-ci daemon"
   },
   "lint-staged": {
     "*.js": [
