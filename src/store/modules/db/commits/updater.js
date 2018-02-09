@@ -1,10 +1,11 @@
-const { curry, assoc, has, over, indexBy, prop, pathOr, lensProp, compose, reduce } = require('ramda');
+const { curry, assoc, defaultTo, view, over, indexBy, prop, lensProp, compose, reduce } = require('ramda');
+const { dotPath } = require('ramda-extension');
 const { mergeRight } = require('ramda-adjunct');
 const { decorate, withDefaultState, handleActions } = require('redux-fp');
 
-const updateNonNull = curry((path, f, state) => {
-  if (has(path, state)) {
-    return over(lensProp(path), f, state);
+const overNonNil = curry((lens, f, state) => {
+  if (view(lens, state)) {
+    return over(lens, f, state);
   }
   return state;
 })
@@ -15,16 +16,18 @@ module.exports = decorate(
     GIT_PUSH: compose(
       mergeRight,
       indexBy(prop('hash')),
-      pathOr([], ['payload', 'push', 'change', 'commits']),
+      defaultTo([]),
+      dotPath('payload.push.change.commits'),
     ),
     RELOAD_BRANCH: compose(
       mergeRight,
       indexBy(prop('hash')),
-      pathOr([], ['payload', 'resolvedBranch', 'commits']),
+      defaultTo([]),
+      dotPath('payload.resolvedBranch.commits'),
     ),
     HAVE_DETACHED_COMMITS: (action) => state => {
       return reduce((state, commitHash) => (
-        updateNonNull(commitHash, assoc('detached', true), state)
+        overNonNil(lensProp(commitHash), assoc('detached', true), state)
       ), state, action.payload.commits);
     },
   })
