@@ -21,6 +21,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "preversion": "npm run test:all",
     "precommit": "npm run lint-staged",
+    "prepush": "npm run test:all",
     "docker:make": "./make",
     "docker:start": "./start",
     "docker:stop": "./stop",
