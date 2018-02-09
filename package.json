@@ -19,7 +19,7 @@
     "lint-staged": "lint-staged",
     "bump": "conventional-bump",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "preversion": "npm run test",
+    "preversion": "npm run test:all",
     "precommit": "npm run lint-staged",
     "docker:make": "./make",
     "docker:start": "./start",
