@@ -1,11 +1,11 @@
 const _ = require('lodash/fp');
-const { map, pipe, prop, path, pathOr, values } = require('ramda');
+const { map, pipe, prop, propOr, path, pathOr, values } = require('ramda');
 const { createSelector } = require('reselect');
 
 const getRepositories = pathOr({}, ['db', 'repositories']);
 
 const getRepository = createSelector(
-  (state, { repositoryFullName }) => repositoryFullName,
+  (state, { repositoryFullName } = {}) => repositoryFullName,
   getRepositories,
   _.get
 )
@@ -20,7 +20,7 @@ const getRepositoriesNames = createSelector(
 
 const getBranches = createSelector(
   getRepository,
-  prop('branches')
+  propOr([], 'branches')
 )
 
 const getBranchesNames = createSelector(
@@ -33,13 +33,13 @@ const getBranchesNames = createSelector(
 
 const getBranch = createSelector(
   getRepository,
-  (state, { branchName }) => branchName,
+  (state, { branchName } = {}) => branchName,
   (repository, branchName) => path(['branches', branchName], repository)
 )
 
 const getBranchCommits = createSelector(
   getBranch,
-  prop('commits'),
+  propOr([], 'commits'),
 )
 
 const getBranchLastCommit = createSelector(
