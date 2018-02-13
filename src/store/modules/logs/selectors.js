@@ -1,3 +1,5 @@
+const { propOr } = require('ramda');
+
 module.exports = {
-  getLogs: (state) => state.logs
+  getLogs: propOr([], 'logs'),
 }
