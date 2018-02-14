@@ -20,7 +20,7 @@ const getCommitsHashes = createSelector(
 )
 
 const getCommit = createSelector(
-  (state, { hash }) => hash,
+  (state, { hash } = {}) => hash,
   getAllCommits,
   _.get,
 )
