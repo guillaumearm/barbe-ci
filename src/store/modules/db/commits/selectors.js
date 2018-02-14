@@ -1,8 +1,8 @@
 const _ = require('lodash/fp');
 const { createSelector } = require('reselect');
-const { reject, propEq, pipe, path, keys } = require('ramda');
+const { reject, propEq, pipe, pathOr, keys } = require('ramda');
 
-const getAllCommits = path(['db', 'commits']);
+const getAllCommits = pathOr({}, ['db', 'commits']);
 
 const getAllCommitsHashes = createSelector(
   getAllCommits,
