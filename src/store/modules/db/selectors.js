@@ -1,5 +1,4 @@
-const { createSelector } = require('reselect');
-const { propOr, difference } = require('ramda');
+const { propOr } = require('ramda');
 
 const tokens = require('./tokens/selectors');
 const users = require('./users/selectors');
@@ -8,11 +7,6 @@ const commits = require('./commits/selectors');
 
 const db = {
   getDb: propOr({}, 'db'),
-  getDetachedCommits: createSelector(
-    commits.getCommitsHashes,
-    repositories.getAllBranchesCommits,
-    (commits, branchesCommits) => difference(commits, branchesCommits),
-  ),
 };
 
 module.exports = {

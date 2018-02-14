@@ -1,4 +1,4 @@
-const { both } = require('ramda');
+const { difference, both } = require('ramda');
 const { pipeMiddlewares } = require('redux-fun');
 const _ = require('lodash/fp');
 
@@ -26,7 +26,7 @@ const findDetachedCommits = _.anyPass([
 const setDetachedCommits = (store) => (next) => async (action) => {
   if (findDetachedCommits(action)) {
     const nexted = await next(action);
-    const detachedCommits = store.getDetachedCommits();
+    const detachedCommits = difference(store.getCommitsHashes(), store.getAllBranchesCommits());
     if (detachedCommits.length) {
       // eslint-disable-next-line no-console
       console.log(`Found ${detachedCommits.length} detached commits`);
