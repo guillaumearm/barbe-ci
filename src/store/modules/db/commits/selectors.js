@@ -4,15 +4,15 @@ const { reject, propEq, pipe, path, keys } = require('ramda');
 
 const getAllCommits = path(['db', 'commits']);
 
-const getCommits = pipe(
-  getAllCommits,
-  reject(propEq('detached', true)),
-);
-
 const getAllCommitsHashes = createSelector(
   getAllCommits,
   keys
 )
+
+const getCommits = pipe(
+  getAllCommits,
+  reject(propEq('detached', true)),
+);
 
 const getCommitsHashes = createSelector(
   getCommits,
@@ -28,7 +28,7 @@ const getCommit = createSelector(
 module.exports = {
   getAllCommits,
   getAllCommitsHashes,
-  getCommit,
   getCommits,
   getCommitsHashes,
+  getCommit,
 }
